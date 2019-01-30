@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,6 +21,10 @@ public class CartController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        CartDao cartDataStore = CartDaoMem.getInstance();
+
+        context.setVariable("cart", cartDataStore.getAll());
+        System.out.println(cartDataStore.getAll());
 
         engine.process("/product/cart.html", context, resp.getWriter());
     }
