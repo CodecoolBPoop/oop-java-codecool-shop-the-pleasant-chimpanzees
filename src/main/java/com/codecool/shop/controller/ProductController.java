@@ -1,8 +1,10 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -106,4 +108,18 @@ public class ProductController extends HttpServlet {
         return seekedProducts;
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        CartDao cartDataStore = CartDaoMem.getInstance();
+        int idOfProduct = Integer.parseInt(req.getParameter("add"));
+
+        if (cartDataStore.find(idOfProduct) == null) {
+            cartDataStore.addToCart(productDataStore.find(idOfProduct));
+        } else {
+            cartDataStore.find(idOfProduct).changeBuyQtyNumber(1);
+        }
+
+        doGet(req,resp);
+    }
 }
