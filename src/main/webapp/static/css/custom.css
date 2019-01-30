@@ -54,3 +54,15 @@
 {
     margin: 0 0 11px;
 }
+
+.img-mid{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+}
+
+h1{
+    color: white;
+    background-color: darkblue;
+}
