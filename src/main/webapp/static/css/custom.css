@@ -1,18 +1,12 @@
 .glyphicon {
     margin-right:5px;
 }
-.thumbnail
-{
-    margin-bottom: 20px;
-    padding: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+
+.thumbnail-img {
+    height: 450px;
 }
-.thumbnail img
-{
-    margin-top: 10px;
-}
+
+
 .item.list-group-item
 {
     float: none;
