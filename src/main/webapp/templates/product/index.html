@@ -62,9 +62,33 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
+
+    <label>Filter by supplier
+        <select id="supplier-drop-down" onchange="sendMessage()">
+            <span th:each="sup : ${suppliers}">
+                <option th:text="${sup.getName()}">supplier</option>
+            </span>
+        </select>
+    </label>
+
+    <label>Filter by category
+        <select id="category-drop-down" onchange="sendMessage()">
+            <span th:each="cat : ${categories}">
+                <option th:text="${cat.getName()}">category</option>
+            </span>
+        </select>
+    </label>
+
+    <script>
+        const sendMessage = () => {
+
+            const supplier = getSelectedValue(document.getElementById('supplier-drop-down'))
+            const category = getSelectedValue(document.getElementById('category-drop-down'))
+
+            window.location.href = `http://localhost:8888/?category=${category}&supplier=${supplier}`
+        }
+        const getSelectedValue = selector => selector.options[selector.selectedIndex].text
+    </script>
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
