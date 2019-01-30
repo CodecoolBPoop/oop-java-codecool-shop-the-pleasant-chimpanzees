@@ -2,10 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.util.Util;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,12 +16,14 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/my-cart"})
 public class CartController extends HttpServlet {
 
+    CartDao cartDataStore = CartDaoMem.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        CartDao cartDataStore = CartDaoMem.getInstance();
+
 
         context.setVariable("cart", cartDataStore.getAll());
 
@@ -34,14 +33,17 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        Util cartController = Util.getInstance();
+        if(req.getParameter("add") != null) {
+            cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
+        }
 
-        cartController.addToCartRequest(req, cartDataStore, productDataStore);
-
-        if(req.getParameter("remove") != null){
-            cartDataStore.removeFromCart(Integer.parseInt(req.getParameter("remove")));
+        if(req.getParameter("remove") != null) {
+            if (cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).getBuyQty() > 1) {
+                cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).changeBuyQtyNumber(-1);
+            } else {
+                cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).changeBuyQtyNumber(-1);
+                cartDataStore.removeFromCart(Integer.parseInt(req.getParameter("remove")));
+            }
         }
 
 

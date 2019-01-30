@@ -7,7 +7,6 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.util.Util;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -45,9 +44,13 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         CartDao cartDataStore = CartDaoMem.getInstance();
-        Util cartController = Util.getInstance();
+        int idOfProduct = Integer.parseInt(req.getParameter("add"));
 
-        cartController.addToCartRequest(req, cartDataStore, productDataStore);
+        if (cartDataStore.find(idOfProduct) == null) {
+            cartDataStore.addToCart(productDataStore.find(idOfProduct));
+        } else {
+            cartDataStore.find(idOfProduct).changeBuyQtyNumber(1);
+        }
 
         doGet(req,resp);
     }

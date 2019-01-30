@@ -22,6 +22,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void addToCart(Product product) {
+        product.changeBuyQtyNumber(1);
         data.add(product);
     }
 
