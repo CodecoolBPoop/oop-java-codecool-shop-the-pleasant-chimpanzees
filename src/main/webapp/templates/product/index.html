@@ -20,6 +20,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
+    <script src="static/js/main.js" defer ></script>
+
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -28,6 +30,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+
 </head>
 
 <body>
@@ -55,13 +60,10 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="img-mid block w-30" src="static/img/product_1.jpg" alt="First slide">
+            <img class="img-mid block w-30" src="static/img/banners/banner_1.png" alt="First slide">
         </div>
         <div class="carousel-item">
-            <img class="img-mid block w-30" src="static/img/product_2.jpg" alt="Second slide">
-        </div>
-        <div class="carousel-item">
-            <img class="img-mid block w-30" src="static/img/product_3.jpg" alt="Third slide">
+            <img class="img-mid block w-30" src="static/img/banners/banner_2.jpg" alt="Second slide">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -75,33 +77,23 @@
 </div>
 
 <div class="container">
+    <div id="filter-console">
+        <label>Filter by publisher
+            <select id="supplier-drop-down" onchange="sendMessage()">
+                <span th:each="sup : ${suppliers}">
+                    <option th:text="${sup.getName()}">supplier</option>
+                </span>
+            </select>
+        </label>
 
-    <label>Filter by supplier
-        <select id="supplier-drop-down" onchange="sendMessage()">
-            <span th:each="sup : ${suppliers}">
-                <option th:text="${sup.getName()}">supplier</option>
-            </span>
-        </select>
-    </label>
-
-    <label>Filter by category
-        <select id="category-drop-down" onchange="sendMessage()">
-            <span th:each="cat : ${categories}">
-                <option th:text="${cat.getName()}">category</option>
-            </span>
-        </select>
-    </label>
-
-    <script>
-        const sendMessage = () => {
-
-            const supplier = getSelectedValue(document.getElementById('supplier-drop-down'))
-            const category = getSelectedValue(document.getElementById('category-drop-down'))
-
-            window.location.href = `http://localhost:8888/?category=${category}&supplier=${supplier}`
-        }
-        const getSelectedValue = selector => selector.options[selector.selectedIndex].text
-    </script>
+        <label>Filter by category
+            <select id="category-drop-down" onchange="sendMessage()">
+                <span th:each="cat : ${categories}">
+                    <option th:text="${cat.getName()}">category</option>
+                </span>
+            </select>
+        </label>
+    </div>
 
     <div id="products" class="row">
         <div class="col col-sm-6 col-md-5 col-lg-3" th:each="prod,iterStat : ${products}">

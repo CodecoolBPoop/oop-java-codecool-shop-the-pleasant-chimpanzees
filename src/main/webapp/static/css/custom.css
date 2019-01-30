@@ -6,6 +6,24 @@
     height: 450px;
 }
 
+#filter-console {
+    padding: 15px 0 10px 5px;
+    border: 1px solid black;
+    margin: 10px 0;
+    color: white;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#filter-console select {
+    margin-left: 15px;
+}
+
+#filter-console label {
+    margin-left: 15px;
+}
 
 .item.list-group-item
 {
