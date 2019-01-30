@@ -22,7 +22,6 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void addToCart(Product product) {
-        product.setId(data.size()+1);
         data.add(product);
     }
 
@@ -45,4 +44,5 @@ public class CartDaoMem implements CartDao {
     public List<Product> getAll() {
         return data;
     }
+
 }
