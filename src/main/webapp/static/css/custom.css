@@ -1,9 +1,30 @@
+body {
+    background-image: url("../img/background/background.jpg");;
+}
+
 .glyphicon {
     margin-right:5px;
 }
 
 .thumbnail-img {
     height: 450px;
+}
+
+#slide-show-banner {
+
+}
+
+.card-text form{
+    display: inline-block;
+}
+
+.card-title {
+    font-size: 25px;
+}
+
+.card-body {
+    padding-left: 20px;
+    padding-right: 0px;
 }
 
 #filter-console {
@@ -15,6 +36,11 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-weight: 600;
+}
+
+.container {
+    background-color: white;
+    padding-top: 6px;
 }
 
 #filter-console select {
@@ -68,10 +94,6 @@
 {
     clear: both;
 }
-.list-group-item-text
-{
-    margin: 0 0 11px;
-}
 
 .img-mid{
     display: block;
@@ -79,9 +101,4 @@
     margin-right: auto;
     margin-top: 60px;
     height: 350px;
-}
-
-h1{
-    color: white;
-    background-color: darkblue;
 }

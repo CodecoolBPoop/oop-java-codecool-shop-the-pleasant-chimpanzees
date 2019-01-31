@@ -42,7 +42,7 @@ public class ProductController extends HttpServlet {
 
         context.setVariable("categories", getCategoriesAtSelectedFirst(categoryFilter));
         context.setVariable("suppliers", getSuppliersAtSelectedFirst(supplierFilter));
-        context.setVariable("products", filter(categoryFilter, supplierFilter, productDataStore));
+        context.setVariable("products", filterProducts(categoryFilter, supplierFilter, productDataStore));
         engine.process("product/index.html", context, resp.getWriter());
 
     }
@@ -76,7 +76,7 @@ public class ProductController extends HttpServlet {
         return returnList;
     }
 
-    private List<Product> filter(String categoryFilter, String supplierFilter, ProductDao productDataStore){
+    private List<Product> filterProducts(String categoryFilter, String supplierFilter, ProductDao productDataStore){
         List<Product> filteredBySupplier;
         List<Product> filteredByCategory;
 
