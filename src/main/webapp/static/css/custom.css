@@ -10,10 +10,6 @@ body {
     height: 450px;
 }
 
-#slide-show-banner {
-
-}
-
 .card-text form{
     display: inline-block;
 }
@@ -61,6 +57,22 @@ body {
 .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
 {
     background: #428bca;
+}
+
+.navbar {
+    background-color: black !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.fa-shopping-cart {
+    color: white;
+}
+
+.more-btn{
+    margin-left: 35px;
 }
 
 .item.list-group-item .list-group-image

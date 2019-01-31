@@ -5,3 +5,7 @@ const sendMessage = () => {
     window.location.href = `http://localhost:8888/?category=${category}&supplier=${supplier}`
 }
 const getSelectedValue = selector => selector.options[selector.selectedIndex].text
+
+$(function(){
+    $('[data-toggle="popover"]').popover()
+});
