@@ -109,7 +109,13 @@
                 <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
+                    <script>$(function(){
+                        $('[data-toggle="popover"]').popover()
+                    });
+                    </script>
+                    <button type="button" class="btn btn-primary" data-toggle="popover" data-placement="top" th:data-content="${prod.description}">
+                        Product description...
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
