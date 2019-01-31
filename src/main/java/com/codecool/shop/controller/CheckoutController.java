@@ -26,4 +26,6 @@ public class CheckoutController extends HttpServlet {
         engine.process("/product/checkout.html", context, resp.getWriter());
 
     }
+
 }
+

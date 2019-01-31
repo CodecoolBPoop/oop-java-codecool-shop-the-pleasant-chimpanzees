@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="/static/css/checkout.css" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="/static/css/checkout.css"/>
 </head>
 <body>
 <div class="row">
@@ -77,13 +77,20 @@
         <div class="container">
             <h4>Cart
                 <span class="price" style="color:black">
-          <i class="fa fa-shopping-cart"></i>
-          <b>4</b>
-        </span>
+                    <i class="fa fa-shopping-cart"></i>
+                </span>
             </h4>
-            <p><a href="#">Product 1</a> <span class="price">$15</span></p>
+            <div th:each="prod, iterStat:${cart}">
+                <p>
+                    <a href="#" th:text="${prod.getBuyQty()} +'x '+ ${prod.name}">Product </a>
+                    <span th:text="${prod.getPriceQuantity()}" class="price"> </span>
+                </p>
+            </div>
 
-            <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+            <p>Total <span class="price" style="color:black">
+
+            </span>
+            </p>
         </div>
     </div>
 </div>
