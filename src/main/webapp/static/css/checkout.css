@@ -83,3 +83,7 @@ span.price {
         margin-bottom: 20px;
     }
 }
+
+.red {
+    background-color: red;
+}
