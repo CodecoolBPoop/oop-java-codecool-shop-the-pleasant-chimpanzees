@@ -83,11 +83,12 @@
             <div th:each="prod, iterStat:${cart}">
                 <p>
                     <a href="#" th:text="${prod.getBuyQty()} +'x '+ ${prod.name}">Product </a>
-                    <span th:text="${prod.getPriceQuantity()}" class="price"> </span>
+                    <span th:text="${prod.getPriceQuantity()} + '$'" class="price"> </span>
                 </p>
             </div>
 
-            <p>Total <span class="price" style="color:black">
+            <p>Total <span class="price" style="color:black"
+            th:text="${totalPrice} + '$'"}
 
             </span>
             </p>
