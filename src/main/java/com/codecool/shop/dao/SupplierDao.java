@@ -4,7 +4,7 @@ import com.codecool.shop.model.Supplier;
 
 import java.util.List;
 
-public interface SupplierDao {
+public interface SupplierDao extends Dao{
 
     void add(Supplier supplier);
     Supplier find(int id);

@@ -80,7 +80,7 @@
         <label>Filter by publisher
             <select id="supplier-drop-down" onchange="sendMessage()">
                 <span th:each="sup : ${suppliers}">
-                    <option th:text="${sup.getName()}">supplier</option>
+                    <option th:text="${sup}">supplier</option>
                 </span>
             </select>
         </label>
@@ -88,7 +88,7 @@
         <label>Filter by category
             <select id="category-drop-down" onchange="sendMessage()">
                 <span th:each="cat : ${categories}">
-                    <option th:text="${cat.getName()}">category</option>
+                    <option th:text="${cat}">category</option>
                 </span>
             </select>
         </label>
