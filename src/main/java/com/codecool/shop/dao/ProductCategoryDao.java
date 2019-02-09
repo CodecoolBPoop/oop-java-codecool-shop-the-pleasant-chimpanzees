@@ -4,11 +4,11 @@ import com.codecool.shop.model.ProductCategory;
 
 import java.util.List;
 
-public interface ProductCategoryDao {
+public interface ProductCategoryDao extends Dao {
 
     void add(ProductCategory category);
     ProductCategory find(int id);
-    public ProductCategory find(String name);
+    ProductCategory find(String name);
     void remove(int id);
 
     List<ProductCategory> getAll();

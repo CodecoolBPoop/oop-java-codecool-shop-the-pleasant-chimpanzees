@@ -1,17 +1,13 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.BaseModel;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -40,38 +36,20 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("categories", getCategoriesAtSelectedFirst(categoryFilter));
-        context.setVariable("suppliers", getSuppliersAtSelectedFirst(supplierFilter));
+        context.setVariable("suppliers", getTagsAtSelectedFirst(supplierFilter, supplierDataStore.getAll(), supplierDataStore));
+        context.setVariable("categories", getTagsAtSelectedFirst(categoryFilter , productCategoryDataStore.getAll(), productCategoryDataStore));
         context.setVariable("products", filterProducts(categoryFilter, supplierFilter, productDataStore));
         engine.process("product/index.html", context, resp.getWriter());
 
     }
 
-    private List<ProductCategory> getCategoriesAtSelectedFirst(String categoryFilter){
-        List<ProductCategory> returnList = new LinkedList<>(
-                Arrays.asList(new ProductCategory("All","All", "All the products"))
-        );
+    private <T extends BaseModel> List<String> getTagsAtSelectedFirst(String filter, List<T> dataSet, Dao from){
+        List<String> returnList = dataSet.stream().map(BaseModel::getName).collect(Collectors.toList());
+        returnList.add(0,"All");
 
-        returnList.addAll(productCategoryDataStore.getAll());
-
-        if(!categoryFilter.equals("All")){
-            returnList = returnList.stream().filter(p -> !p.getName().equals(categoryFilter)).collect(Collectors.toList());
-            returnList.add(0, productCategoryDataStore.find(categoryFilter));
-        }
-
-        return returnList;
-    }
-
-    private List<Supplier> getSuppliersAtSelectedFirst(String supplierFilter){
-        List<Supplier> returnList = new LinkedList<>(
-                Arrays.asList(new Supplier("All", "All the suppliers"))
-        );
-
-        returnList.addAll(supplierDataStore.getAll());
-
-        if(!supplierFilter.equals("All")){
-            returnList = returnList.stream().filter(p -> !p.getName().equals(supplierFilter)).collect(Collectors.toList());
-            returnList.add(0, supplierDataStore.find(supplierFilter));
+        if(!filter.equals("All")){
+            returnList = returnList.stream().filter(x -> !x.equals(filter)).collect(Collectors.toList());
+            returnList.add(0, from.find(filter).getName());
         }
         return returnList;
     }
