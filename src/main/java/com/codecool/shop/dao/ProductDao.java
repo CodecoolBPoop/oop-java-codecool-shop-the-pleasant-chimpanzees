@@ -6,7 +6,7 @@ import com.codecool.shop.model.ProductCategory;
 
 import java.util.List;
 
-public interface ProductDao {
+public interface ProductDao{
 
     void add(Product product);
     Product find(int id);
