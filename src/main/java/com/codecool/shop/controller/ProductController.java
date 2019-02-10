@@ -36,20 +36,20 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("suppliers", getTagsAtSelectedFirst(supplierFilter, supplierDataStore.getAll(), supplierDataStore));
-        context.setVariable("categories", getTagsAtSelectedFirst(categoryFilter , productCategoryDataStore.getAll(), productCategoryDataStore));
+        context.setVariable("suppliers", getTagsAtSelectedFirst(supplierFilter, supplierDataStore.getAll()));
+        context.setVariable("categories", getTagsAtSelectedFirst(categoryFilter , productCategoryDataStore.getAll()));
         context.setVariable("products", filterProducts(categoryFilter, supplierFilter, productDataStore));
         engine.process("product/index.html", context, resp.getWriter());
 
     }
 
-    private <T extends BaseModel> List<String> getTagsAtSelectedFirst(String filter, List<T> dataSet, Dao from){
+    private <T extends BaseModel> List<String> getTagsAtSelectedFirst(String filter, List<T> dataSet){
         List<String> returnList = dataSet.stream().map(BaseModel::getName).collect(Collectors.toList());
         returnList.add(0,"All");
 
         if(!filter.equals("All")){
             returnList = returnList.stream().filter(x -> !x.equals(filter)).collect(Collectors.toList());
-            returnList.add(0, from.find(filter).getName());
+            returnList.add(0, filter);
         }
         return returnList;
     }
