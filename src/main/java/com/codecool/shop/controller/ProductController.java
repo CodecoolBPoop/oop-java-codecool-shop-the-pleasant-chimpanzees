@@ -47,7 +47,7 @@ public class ProductController extends HttpServlet {
         List<String> returnList = dataSet.stream().map(BaseModel::getName).collect(Collectors.toList());
         returnList.add(0,"All");
 
-        if(!filter.equals("All")){
+        if(!filter.equals("Al")){
             returnList = returnList.stream().filter(x -> !x.equals(filter)).collect(Collectors.toList());
             returnList.add(0, filter);
         }
