@@ -1,0 +1,4 @@
+driver = org.postgresql.Driver
+dbUrl = jdbc:postgresql://localhost:5432/codecoolshop
+user  = adamgonda
+dbPwd = pwd

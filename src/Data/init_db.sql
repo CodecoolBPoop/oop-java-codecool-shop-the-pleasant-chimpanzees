@@ -25,27 +25,28 @@ CREATE TABLE
 
 CREATE TABLE
   product_category(
-             id SERIAL PRIMARY KEY,
-             name VARCHAR,
-             description VARCHAR,
-             department VARCHAR
+         id SERIAL PRIMARY KEY,
+         name VARCHAR,
+         description VARCHAR,
+         department VARCHAR
 );
 
 CREATE TABLE
     supplier(
-            id SERIAL PRIMARY KEY,
-            name VARCHAR,
-            description VARCHAR
+        id SERIAL PRIMARY KEY,
+        name VARCHAR,
+        description VARCHAR
 );
 
 CREATE TABLE
   product(
         id SERIAL PRIMARY KEY,
-        product_category_id INTEGER REFERENCES product_category (id),
-        price FLOAT,
+        category_id INTEGER REFERENCES product_category (id),
+        supplier_id INTEGER REFERENCES supplier (id),
         name VARCHAR,
         description VARCHAR,
-        supplier_id INTEGER REFERENCES supplier (id)
+        price FLOAT,
+        image_path VARCHAR
 
 );
 
