@@ -14,21 +14,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DBUtilTest {
 
+    private Connection connection;
+
     @BeforeAll
     void init() throws FileNotFoundException {
-        executeQueryFromFile("src/Data/init_db.sql");
-        executeQueryFromFile("src/Data/test_data.sql");
+
+        DBUtil.ConnectionData data = new DBUtil.ConnectionData(
+                "src/Data/prod_config.txt",
+                "src/Data/test_config.txt");
+
+        DBUtil.getInstance().configure(data);
+        connection = DBUtil.getInstance().getTestConnection();
+
+        executeQueryFromFile("src/Data/init_db.sql", connection);
+        executeQueryFromFile("src/Data/test_data.sql", connection);
     }
 
-    private void executeQueryFromFile(String path) throws FileNotFoundException {
+    private void executeQueryFromFile(String path, Connection connection) throws FileNotFoundException {
         File file = new File(path);
         Scanner scanner = new Scanner(file);
-        Connection connection = DBUtil.getInstance().getConnection();
         StringBuilder sb = new StringBuilder();
         while(scanner.hasNextLine()){
             sb.append(scanner.nextLine());
@@ -45,7 +54,6 @@ class DBUtilTest {
 
     @Test
     void testGetContext(){
-        Connection connection = DBUtil.getInstance().getConnection();
         List<String> expected = Arrays.asList(
                 "bob@gmail.com", "marti@gmail.com", "helen@gmail.com");
 
