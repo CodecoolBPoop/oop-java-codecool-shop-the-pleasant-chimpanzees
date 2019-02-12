@@ -11,9 +11,18 @@ import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
 
+    private Connection connection;
+
+    public ProductDaoJdbc() {
+        this.connection = DBUtil.getInstance().getConnection();
+    }
+
+    public ProductDaoJdbc(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void add(Product product) {
-        Connection connection = DBUtil.getInstance().getConnection();
         try {
             Statement statement = connection.createStatement();
             String sqlQuery = "insert into product (name, description, price) values (?, ?, ?)";
@@ -24,6 +33,7 @@ public class ProductDaoJdbc implements ProductDao {
             preparedStatement.execute();
             statement.close();
         } catch (SQLException e) {
+            System.out.printf("I couldn't add product named %s to the database for some reason.", product.getName());
             e.printStackTrace();
         }
     }
