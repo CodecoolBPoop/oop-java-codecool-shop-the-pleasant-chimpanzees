@@ -22,6 +22,10 @@ public class ProductDaoJdbcTest {
     @Test
     void findAnExistingProduct() {
         dbProduct.find(3);
+    }
+
+    @Test
+    void removeProduct() {
 
     }
 

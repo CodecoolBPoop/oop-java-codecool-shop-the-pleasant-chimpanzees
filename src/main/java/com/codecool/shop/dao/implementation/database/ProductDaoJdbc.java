@@ -51,7 +51,7 @@ public class ProductDaoJdbc implements ProductDao {
                 searched.setId(results.getInt("id"));
                 searched.setName(results.getString("name"));
                 searched.setDescription(results.getString("description"));
-                searched.setPrice(results.getFloat("price"), "HUF");
+                searched.setPrice(results.getFloat("price"), "USD");
                 searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
                 searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
             }
@@ -68,6 +68,17 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public void remove(int id) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "delete from product where id = ?";
+            PreparedStatement preppedSt = connection.prepareStatement(sql);
+            preppedSt.setInt(1, id);
+            preppedSt.execute();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.printf("Cant find product by id %s%n", id);
+            e.printStackTrace();
+        }
 
     }
 
