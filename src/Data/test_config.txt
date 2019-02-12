@@ -1,4 +1,4 @@
 driver = org.postgresql.Driver
-url = jdbc:postgresql://localhost:5432/codecoolshop
+url = jdbc:postgresql://localhost:5432/ccshoptest
 user  = evi
 password = 011111
