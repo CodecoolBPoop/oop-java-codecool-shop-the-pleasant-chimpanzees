@@ -65,7 +65,7 @@ class DBUtilTest {
             }
             rs.close();
             st.close();
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
