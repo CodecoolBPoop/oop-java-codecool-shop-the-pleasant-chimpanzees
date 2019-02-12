@@ -2,10 +2,7 @@ package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.model.Product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class BaseDaoJdbc {
 
@@ -29,6 +26,28 @@ public class BaseDaoJdbc {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String find(String id) {
+
+        String query = "SELECT * FROM products_in_carts";
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            if (resultSet.next()){
+                String result = "";
+                return result;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 
