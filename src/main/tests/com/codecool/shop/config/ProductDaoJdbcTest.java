@@ -9,13 +9,20 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 
 public class ProductDaoJdbcTest {
+    Connection connection = DBTestUtil.getInstance().getConnection();
+    ProductDaoJdbc dbProduct = new ProductDaoJdbc(connection);
+
 
     @Test
     void productWithSomeFieldsCanBeAdded() {
-        Connection connection = DBTestUtil.getInstance().getConnection();
         Product product = new Product("testProduct", 1, "HUF", "test", new ProductCategory("one", "HR", "two"), new Supplier("three", "four"));
-        ProductDaoJdbc dbProduct = new ProductDaoJdbc(connection);
         dbProduct.add(product);
+    }
+
+    @Test
+    void findAnExistingProduct() {
+        dbProduct.find(3);
+
     }
 
 

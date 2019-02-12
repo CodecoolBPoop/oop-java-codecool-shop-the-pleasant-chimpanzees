@@ -40,6 +40,29 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public Product find(int id) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from product join supplier on product.supplier_id = supplier.id join product_category on product.category_id = product_category.id where product.id = ?";
+            PreparedStatement preparedSt = connection.prepareStatement(sql);
+            preparedSt.setInt(1, id);
+            ResultSet results = preparedSt.executeQuery();
+            Product searched = new Product();
+            while (results.next()) {
+                searched.setId(results.getInt("id"));
+                searched.setName(results.getString("name"));
+                searched.setDescription(results.getString("description"));
+                searched.setPrice(results.getFloat("price"), "HUF");
+                searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
+                searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+            }
+            statement.close();
+            System.out.println(searched.toString());
+            return searched;
+
+        } catch (SQLException e) {
+            System.out.printf("I couldn't find product of id %s%n", id);
+            e.printStackTrace();
+        }
         return null;
     }
 
