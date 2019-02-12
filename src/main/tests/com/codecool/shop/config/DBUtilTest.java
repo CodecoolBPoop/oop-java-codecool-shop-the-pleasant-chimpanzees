@@ -17,9 +17,7 @@ class DBUtilTest {
     void testGetContext(){
         Connection connection = DBUtil.getInstance().getConnection();
         List<String> expected = Arrays.asList(
-                "Bob",
-                "Hello",
-                "Bello");
+                "bob@gmail.com", "marti@gmail.com", "helen@gmail.com");
         List<String> result = new ArrayList<>();
         try {
             Statement st = connection.createStatement();

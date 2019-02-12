@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class DBUtil {
 
-    private String CONFIG_FILE_PATH = "/Users/adamgonda/IdeaProjects/current/oop-java-codecool-shop-the-pleasant-chimpanzees/src/Data/db_config.txt";
+    private String CONFIG_FILE_PATH = "paste here the path to the db_config.txt";
 
     private static DBUtil instance;
     private Map<String, String> CONFIG_DATA = new HashMap<>();
@@ -82,7 +82,7 @@ public class DBUtil {
     }
 
     private String getUrl() {
-        return CONFIG_DATA.get("dbUrl");
+        return CONFIG_DATA.get("url");
     }
 
     private String getUser() {
@@ -90,7 +90,7 @@ public class DBUtil {
     }
 
     private String getPassword() {
-        return CONFIG_DATA.get("dbPwd");
+        return CONFIG_DATA.get("password");
     }
 
     public Connection getConnection(){
