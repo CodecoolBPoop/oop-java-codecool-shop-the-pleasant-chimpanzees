@@ -6,16 +6,25 @@ import com.codecool.shop.model.Supplier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
 
-    Connection conn = DBUtil.getInstance().getConnection();
+    private Connection conn;
+
+    public SupplierDaoJdbc() {
+        conn = DBUtil.getInstance().getConnection();
+    }
+
+    public SupplierDaoJdbc(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public void add(Supplier supplier) {
-        String query = "INSERT INTO supplier VALUES (?,?)";
+        String query = "INSERT INTO supplier (name, description) VALUES (?,?)";
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, supplier.getName());
@@ -28,6 +37,21 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public Supplier find(int id) {
+        String query = "SELECT * FROM supplier WHERE id = ?";
+        Supplier supplier;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                supplier = new Supplier(rs.getString("name"), rs.getString("description"));
+                return supplier;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed to retrieve user from db: " + e);
+        }
         return null;
     }
 
