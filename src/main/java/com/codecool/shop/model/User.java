@@ -9,6 +9,14 @@ public class User {
     public String state;
     public int zip;
 
+    public User(int id, String email, String address, String city, String state, int zip) {
+        this.id = id;
+        this.email = email;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
 
     public User(){}
 
