@@ -10,28 +10,28 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class DBUtil {
+public class DBTestUtil {
 
-    private String CONFIG_FILE_PATH = "src/Data/db_config.txt";
+    private String TEST_CONFIG_FILE_PATH = "src/Data/test_config.txt";
 
-    private static DBUtil instance;
+    private static DBTestUtil instance;
     private Map<String, String> CONFIG_DATA = new HashMap<>();
     private Connection CONNECTION;
 
-    public DBUtil() {
+    public DBTestUtil() {
         initConfigData();
         initializeConnection();
     }
 
-    public static DBUtil getInstance(){
+    public static DBTestUtil getInstance(){
         if(instance == null){
-            instance = new DBUtil();
+            instance = new DBTestUtil();
         }
         return instance;
     }
 
     private Map<String, String> initConfigData() {
-        File file = new File(CONFIG_FILE_PATH);
+        File file = new File(TEST_CONFIG_FILE_PATH);
         Scanner sc = null;
         try {
             sc = new Scanner(file);
