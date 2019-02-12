@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class DBUtil {
 
-    private String CONFIG_FILE_PATH = "paste here the path to the db_config.txt";
+    private String CONFIG_FILE_PATH = "src/Data/db_config.txt";
 
     private static DBUtil instance;
     private Map<String, String> CONFIG_DATA = new HashMap<>();
