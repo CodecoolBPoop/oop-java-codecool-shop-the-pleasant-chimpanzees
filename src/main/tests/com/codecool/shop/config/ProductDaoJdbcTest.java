@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 
 public class ProductDaoJdbcTest {
-    Connection connection = DBTestUtil.getInstance().getConnection();
+    Connection connection = DBUtil.getInstance().getTestConnection();
     ProductDaoJdbc dbProduct = new ProductDaoJdbc(connection);
 
 
