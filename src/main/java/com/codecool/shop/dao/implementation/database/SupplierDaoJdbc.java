@@ -50,13 +50,20 @@ public class SupplierDaoJdbc implements SupplierDao {
             }
 
         } catch (SQLException e) {
-            System.out.println("Failed to retrieve user from db: " + e);
+            System.out.println("Failed to retrieve user from db by id: " + e);
         }
         return null;
     }
 
     @Override
     public Supplier find(String name) {
+        String query = "SELECT * FROM supplier WHERE name = ?";
+        Supplier supplier;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        } catch (SQLException e) {
+            System.out.println("Failed to retrieve user from db by name: " + e);
+        }
         return null;
     }
 
