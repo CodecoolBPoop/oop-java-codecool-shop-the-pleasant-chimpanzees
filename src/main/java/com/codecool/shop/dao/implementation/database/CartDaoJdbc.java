@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation.Database;
+package com.codecool.shop.dao.implementation.database;
 
 import com.codecool.shop.config.DBUtil;
 import com.codecool.shop.dao.CartDao;
@@ -50,9 +50,7 @@ public class CartDaoJdbc implements CartDao {
 
     }
 
-    @Override
-    public Product find(int id) {
-        return null;
+    public Product findProduct(int id) {
     }
 
     @Override
