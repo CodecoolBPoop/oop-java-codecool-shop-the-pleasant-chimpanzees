@@ -13,12 +13,20 @@ import java.util.List;
 public class SupplierDaoJdbc implements SupplierDao {
 
     private Connection conn;
+    private static SupplierDaoJdbc instance = null;
 
-    public SupplierDaoJdbc() {
-        conn = DBUtil.getInstance().getConnection();
+    public static SupplierDaoJdbc getInstance() {
+        if (instance == null) {
+            instance = new SupplierDaoJdbc();
+        }
+        return instance;
     }
 
-    public SupplierDaoJdbc(Connection conn) {
+    private SupplierDaoJdbc() {
+        conn = DBUtil.getInstance().getProductionConnection();
+    }
+
+    private SupplierDaoJdbc(Connection conn) {
         this.conn = conn;
     }
 
@@ -41,7 +49,7 @@ public class SupplierDaoJdbc implements SupplierDao {
         Supplier supplier;
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
@@ -61,6 +69,14 @@ public class SupplierDaoJdbc implements SupplierDao {
         Supplier supplier;
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                supplier = new Supplier(rs.getString("name"), rs.getString("description"));
+                return supplier;
+            }
+
         } catch (SQLException e) {
             System.out.println("Failed to retrieve user from db by name: " + e);
         }
@@ -75,5 +91,9 @@ public class SupplierDaoJdbc implements SupplierDao {
     @Override
     public List<Supplier> getAll() {
         return null;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 }
