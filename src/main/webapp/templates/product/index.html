@@ -97,7 +97,7 @@
     <div id="products" class="row">
         <div class="col col-sm-6 col-md-5 col-lg-3 pb-5" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_images/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                 </div>
