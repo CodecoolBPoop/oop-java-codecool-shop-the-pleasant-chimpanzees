@@ -13,7 +13,7 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public void add(Product product) {
-        Connection connection = DBUtil.getInstance(false).getConnection();
+        Connection connection = DBUtil.getInstance().getConnection();
         try {
             Statement statement = connection.createStatement();
             String sqlQuery = "insert into product (name, description, price) values (?, ?, ?)";
