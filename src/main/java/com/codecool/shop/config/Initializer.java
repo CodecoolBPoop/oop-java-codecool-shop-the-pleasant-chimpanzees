@@ -17,6 +17,12 @@ public class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
+        DBUtil.ConnectionData data = new DBUtil.ConnectionData(
+                "src/Data/prod_config.txt",
+                "src/Data/test_config.txt");
+
+        DBUtil.getInstance().configure(data);
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
