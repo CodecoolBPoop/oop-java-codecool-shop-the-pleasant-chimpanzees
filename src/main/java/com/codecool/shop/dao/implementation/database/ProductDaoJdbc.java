@@ -14,7 +14,7 @@ public class ProductDaoJdbc implements ProductDao {
     private Connection connection;
 
     public ProductDaoJdbc() {
-        this.connection = DBUtil.getInstance().getConnection();
+        this.connection = DBUtil.getInstance().getProductionConnection();
     }
 
     public ProductDaoJdbc(Connection connection) {
