@@ -20,7 +20,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-    <script src="static/js/main.js" defer ></script>
+    <script src="static/js/index.js" defer ></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
@@ -107,7 +107,7 @@
                     </div>
                     <div class="card-text">
                         <form action="/" method="post">
-                            <button name="add" class="btn btn-success" type="submit" th:value="${prod.id}">Add to cart</button>
+                            <button id="add_to_checkout_btn" name="add" class="btn btn-success" type="submit" th:value="${prod.id}">Add to cart</button>
                         </form>
                         <button type="button" class="btn btn-primary more-btn" data-toggle="popover" data-placement="top" th:data-content="${prod.description}">
                             More
@@ -119,7 +119,7 @@
     </div>
 
 </div>
-
+  
 <div th:replace="footer.html :: copy"></div>
 
 </body>
