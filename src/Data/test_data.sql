@@ -1,4 +1,4 @@
---users
+
 
 INSERT INTO _user (email, password)
 VALUES ('bob@gmail.com','test');
@@ -10,7 +10,6 @@ INSERT INTO _user (email, password)
 VALUES ('helen@gmail.com','test');
 
 
---billing infos
 
 INSERT INTO billing_info (user_id, name, address, city, state, zip)
 VALUES (1, 'Bob', 'at the mall', 'pecs', 'ott', 007);
@@ -22,7 +21,6 @@ INSERT INTO billing_info (user_id, name, address, city, state, zip)
 VALUES (3, 'Helena', 'there', 'Buda', 'Pest', 1007);
 
 
---carts
 
 INSERT INTO cart (user_id)
 VALUES (1);
@@ -34,7 +32,6 @@ INSERT INTO cart (user_id)
 VALUES (3);
 
 
---product categories
 
 INSERT INTO product_category (name, description, department)
 VALUES ('Superhero', 'About Superheroes', '???');
@@ -46,7 +43,6 @@ INSERT INTO product_category (name, description, department)
 VALUES ('Horror', 'About Horror', '???');
 
 
---suppliers
 
 INSERT INTO supplier (name, description)
 VALUES ('Marvel', 'Marvel comic books');
@@ -61,7 +57,6 @@ INSERT INTO supplier (name, description)
 VALUES ('Random House', 'Random House comic books');
 
 
---products
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
 VALUES (1, 2, 'The Flash: Born to Run', '???', 8.15, 'src/main/webapp/static/img/product_images/product_1.jpg');
@@ -112,7 +107,6 @@ INSERT INTO product (category_id, supplier_id, name, description, price, image_p
 VALUES (1, 2, 'Preacher', '???', 8.15, 'src/main/webapp/static/img/product_images/product_16.jpg');
 
 
---products in carts
 
 INSERT INTO products_in_carts (cart_id, product_id)
 VALUES (1, 6);

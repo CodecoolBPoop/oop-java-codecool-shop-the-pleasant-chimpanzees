@@ -1,10 +1,10 @@
-drop table billing_info;
-drop table products_in_carts;
-drop table product;
-drop table product_category;
-drop table supplier;
-drop table cart;
-drop table "_user";
+drop table if exists billing_info;
+drop table if exists products_in_carts;
+drop table if exists product;
+drop table if exists product_category;
+drop table if exists supplier;
+drop table if exists cart;
+drop table if exists "_user";
 
 CREATE TABLE
   _user(
