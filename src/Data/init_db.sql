@@ -10,7 +10,7 @@ CREATE TABLE
   _user(
          id SERIAL PRIMARY KEY,
          email VARCHAR,
-         password VARCHAR
+         password VARCHAR NOT NULL
 );
 
 CREATE TABLE

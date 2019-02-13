@@ -7,7 +7,7 @@ public class User {
     public String address;
     public String city;
     public String state;
-    public int zip;
+    public Integer zip;
 
     public User(int id, String email, String address, String city, String state, int zip) {
         this.id = id;
