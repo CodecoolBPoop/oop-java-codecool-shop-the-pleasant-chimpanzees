@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
@@ -24,10 +25,6 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     private SupplierDaoJdbc() {
         conn = DBUtil.getInstance().getProductionConnection();
-    }
-
-    private SupplierDaoJdbc(Connection conn) {
-        this.conn = conn;
     }
 
     @Override
@@ -54,6 +51,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
             if (rs.next()) {
                 supplier = new Supplier(rs.getString("name"), rs.getString("description"));
+                supplier.setId(rs.getInt("id"));
                 return supplier;
             }
 
@@ -74,6 +72,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
             if (rs.next()) {
                 supplier = new Supplier(rs.getString("name"), rs.getString("description"));
+                supplier.setId(rs.getInt("id"));
                 return supplier;
             }
 
@@ -85,12 +84,33 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public void remove(int id) {
-
+        String query = "REMOVE FROM supplier WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to remove supplier from db: " + e);
+        }
     }
 
     @Override
     public List<Supplier> getAll() {
-        return null;
+        List<Supplier> allSuppliers = new ArrayList<>();
+        String query = "SELECT * FROM supplier";
+        Supplier supplier;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                supplier = new Supplier(rs.getString("name"), rs.getString("description"));
+                supplier.setId(rs.getInt("id"));
+                allSuppliers.add(supplier);
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to get all suppliers from db: " + e);
+        }
+        return allSuppliers;
     }
 
     public void setConn(Connection conn) {
