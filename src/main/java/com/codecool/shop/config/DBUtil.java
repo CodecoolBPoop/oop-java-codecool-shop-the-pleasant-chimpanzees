@@ -135,6 +135,8 @@ public class DBUtil {
             return TEST_CONFIG_DATA.get("password");
         }
 
+        public String getTestDatabaseName() { return TEST_CONFIG_DATA.get("url").substring(TEST_CONFIG_DATA.get("url").lastIndexOf("/")+1);}
+
     }
 }
 

@@ -15,10 +15,11 @@ import java.util.List;
 public class SupplierDaoJdbcTest {
 
     Connection testConnection;
+    DBUtil.ConnectionData data;
 
     @BeforeAll
     void init() {
-        DBUtil.ConnectionData data = new DBUtil.ConnectionData(
+        data = new DBUtil.ConnectionData(
                 "src/Data/prod_config.txt",
                 "src/Data/test_config.txt");
 
@@ -29,7 +30,9 @@ public class SupplierDaoJdbcTest {
     @BeforeEach
     void clearDB() {
 
-        String[] command = {"psql", "-U", "postgres", "-d", "codecoolshoptester", "-h", "localhost", "-f", "src/Data/init_db.sql"};
+
+
+        String[] command = {"psql", "-U", data.getTestUser(), "-d", data.getTestDatabaseName(), "-h", "localhost", "-f", "src/Data/init_db.sql"};
         ProcessBuilder processBuilder = new ProcessBuilder();
 
         processBuilder.command(command);
