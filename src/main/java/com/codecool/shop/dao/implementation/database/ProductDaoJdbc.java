@@ -56,7 +56,9 @@ public class ProductDaoJdbc implements ProductDao {
                 searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
             }
             statement.close();
-            System.out.println(searched.toString());
+            if (searched.getName().equals("")) {
+                throw new NullPointerException("No stuff by this id exists.");
+            }
             return searched;
 
         } catch (SQLException e) {

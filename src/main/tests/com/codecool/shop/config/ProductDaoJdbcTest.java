@@ -7,8 +7,13 @@ import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
+import java.lang.reflect.Executable;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductDaoJdbcTest {
@@ -37,13 +42,23 @@ public class ProductDaoJdbcTest {
 
     @Test
     void findAnExistingProduct() {
-        dbProduct.find(3);
+        Product found = dbProduct.find(3);
+        String expectedName = "Green Lantern: Agent Orange";
+        int expectedId = 3;
+        assertEquals(expectedName, found.getName());
+        assertEquals(expectedId, found.getId());
+    }
+
+    @Test
+    void findNonExistingProduct() {
+        assertThrows(NullPointerException.class, () -> {
+            dbProduct.find(46454553);
+        });
     }
 
     @Test
     void removeProduct() {
         dbProduct.remove(17);
-
     }
 
 
