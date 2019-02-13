@@ -8,7 +8,6 @@ import com.codecool.shop.model.Supplier;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -49,14 +48,7 @@ public class ProductDaoJdbc implements ProductDao {
             preparedSt.setInt(1, id);
             ResultSet results = preparedSt.executeQuery();
             Product searched = new Product();
-            while (results.next()) {
-                searched.setId(results.getInt("id"));
-                searched.setName(results.getString("name"));
-                searched.setDescription(results.getString("description"));
-                searched.setPrice(results.getFloat("price"), "USD");
-                searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
-                searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
-            }
+            getOneProductData(results, searched);
             statement.close();
             if (searched.getName().equals("")) {
                 throw new NullPointerException("No stuff by this id exists.");
@@ -78,14 +70,7 @@ public class ProductDaoJdbc implements ProductDao {
             preparedSt.setString(1, productName);
             ResultSet results = preparedSt.executeQuery();
             Product searched = new Product();
-            while (results.next()) {
-                searched.setId(results.getInt("id"));
-                searched.setName(results.getString("name"));
-                searched.setDescription(results.getString("description"));
-                searched.setPrice(results.getFloat("price"), "USD");
-                searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
-                searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
-            }
+            getOneProductData(results, searched);
             statement.close();
             if (searched.getName().equals("")) {
                 throw new NullPointerException("No stuff by this id exists.");
@@ -97,6 +82,17 @@ public class ProductDaoJdbc implements ProductDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void getOneProductData(ResultSet results, Product searched) throws SQLException {
+        while (results.next()) {
+            searched.setId(results.getInt("id"));
+            searched.setName(results.getString("name"));
+            searched.setDescription(results.getString("description"));
+            searched.setPrice(results.getFloat("price"), "USD");
+            searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
+            searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+        }
     }
 
     @Override
@@ -120,20 +116,10 @@ public class ProductDaoJdbc implements ProductDao {
         ArrayList<Product> everyProduct = new ArrayList<>();
 
         try {
-            Statement statement = connection.createStatement();
             String sql = "select * from product";
             PreparedStatement preppedStmnt = connection.prepareStatement(sql);
             ResultSet results = preppedStmnt.executeQuery();
-            while (results.next()) {
-                Product current = new Product();
-                current.setId(results.getInt("id"));
-                current.setName(results.getString("name"));
-                current.setDescription(results.getString("description"));
-                current.setPrice(results.getFloat("price"), "USD");
-                // current.setSupplier(new Supplier(results.getString(9), results.getString(10)));
-                // current.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
-                everyProduct.add(current);
-            }
+            everyProduct = collectProductsToList(results);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,12 +129,52 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return null;
+        int supplierId = supplier.getId();
+        ArrayList<Product> everyProduct = new ArrayList<>();
+
+        try {
+            String sql = "select * from product where product.supplier_id = ?";
+            PreparedStatement preppedStmnt = connection.prepareStatement(sql);
+            preppedStmnt.setInt(1, supplierId);
+            ResultSet results = preppedStmnt.executeQuery();
+            everyProduct = collectProductsToList(results);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return everyProduct;
+
+    }
+
+    private ArrayList<Product> collectProductsToList(ResultSet results) throws SQLException {
+        ArrayList<Product> everyProduct = new ArrayList<>();
+        while (results.next()) {
+            Product current = new Product();
+            current.setId(results.getInt("id"));
+            current.setName(results.getString("name"));
+            current.setDescription(results.getString("description"));
+            current.setPrice(results.getFloat("price"), "USD");
+            everyProduct.add(current);
+        }
+        return everyProduct;
     }
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        return null;
+        int categoryId = productCategory.getId();
+        ArrayList<Product> everyProduct = new ArrayList<>();
+
+        try {
+            String sql = "select * from product where product.category_id = ?";
+            PreparedStatement preppedStmnt = connection.prepareStatement(sql);
+            preppedStmnt.setInt(1, categoryId);
+            ResultSet results = preppedStmnt.executeQuery();
+            everyProduct = collectProductsToList(results);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return everyProduct;
     }
 
 
