@@ -70,6 +70,11 @@ public class ProductDaoJdbcTest {
         dbProduct.remove(20);
     }
 
+    @Test
+    void getAllProducts() {
+        dbProduct.getAll();
+    }
+
 
 
 

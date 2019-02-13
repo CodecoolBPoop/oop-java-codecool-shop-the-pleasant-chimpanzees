@@ -7,6 +7,8 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -115,7 +117,28 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        return null;
+        ArrayList<Product> everyProduct = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from product";
+            PreparedStatement preppedStmnt = connection.prepareStatement(sql);
+            ResultSet results = preppedStmnt.executeQuery();
+            while (results.next()) {
+                Product current = new Product();
+                current.setId(results.getInt("id"));
+                current.setName(results.getString("name"));
+                current.setDescription(results.getString("description"));
+                current.setPrice(results.getFloat("price"), "USD");
+                // current.setSupplier(new Supplier(results.getString(9), results.getString(10)));
+                // current.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+                everyProduct.add(current);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return everyProduct;
     }
 
     @Override
