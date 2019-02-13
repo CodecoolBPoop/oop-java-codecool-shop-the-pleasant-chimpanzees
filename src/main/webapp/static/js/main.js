@@ -30,8 +30,12 @@ function saveToLocalStorage(obj) {
 }
 
 function setAddProductEventHandler(){
-    document.getElementById('add_to_checkout_btn')
-        .addEventListener('click', handleAddProduct)
+    const btns = document.getElementsByClassName('add_to_checkout_btn')
+
+    for(let btn of btns){
+        btn.addEventListener('click', handleAddProduct)
+    }
+
 }
 
 function filterSetup(){
