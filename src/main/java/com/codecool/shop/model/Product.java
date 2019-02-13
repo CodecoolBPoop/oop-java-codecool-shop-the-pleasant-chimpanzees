@@ -11,6 +11,9 @@ public class Product extends BaseModel {
     private int buyQty;
 
 
+    public Product() {
+    }
+
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
@@ -18,6 +21,8 @@ public class Product extends BaseModel {
         this.setProductCategory(productCategory);
         this.buyQty = 0;
     }
+
+
 
     public int getBuyQty() {
         return buyQty;
@@ -87,4 +92,6 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+
 }
