@@ -68,6 +68,35 @@ public class ProductDaoJdbc implements ProductDao {
         return null;
     }
 
+    public Product findByName(String productName) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from product join supplier on product.supplier_id = supplier.id join product_category on product.category_id = product_category.id where product.name = ?";
+            PreparedStatement preparedSt = connection.prepareStatement(sql);
+            preparedSt.setString(1, productName);
+            ResultSet results = preparedSt.executeQuery();
+            Product searched = new Product();
+            while (results.next()) {
+                searched.setId(results.getInt("id"));
+                searched.setName(results.getString("name"));
+                searched.setDescription(results.getString("description"));
+                searched.setPrice(results.getFloat("price"), "USD");
+                searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
+                searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+            }
+            statement.close();
+            if (searched.getName().equals("")) {
+                throw new NullPointerException("No stuff by this id exists.");
+            }
+            return searched;
+
+        } catch (SQLException e) {
+            System.out.printf("I couldn't find product of id %s%n", productName);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void remove(int id) {
         try {
@@ -98,4 +127,7 @@ public class ProductDaoJdbc implements ProductDao {
     public List<Product> getBy(ProductCategory productCategory) {
         return null;
     }
+
+
+
 }

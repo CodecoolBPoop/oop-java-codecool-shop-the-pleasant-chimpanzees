@@ -57,8 +57,17 @@ public class ProductDaoJdbcTest {
     }
 
     @Test
+    void findExistingByName() {
+        Product found = dbProduct.findByName("Alf");
+        String expectedName = "Alf";
+        int expectedId = 6;
+        assertEquals(expectedName, found.getName());
+        assertEquals(expectedId, found.getId());
+    }
+
+    @Test
     void removeProduct() {
-        dbProduct.remove(17);
+        dbProduct.remove(20);
     }
 
 
