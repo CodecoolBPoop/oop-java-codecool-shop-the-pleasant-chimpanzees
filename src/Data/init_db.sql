@@ -60,6 +60,7 @@ CREATE TABLE
 
 CREATE TABLE
   products_in_carts(
+        id SERIAL PRIMARY KEY,
         cart_id INTEGER REFERENCES cart (id),
         product_id INTEGER REFERENCES product (id)
 );

@@ -24,62 +24,52 @@ public class CartDaoJdbc implements CartDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*String queryC = "INSERT INTO cart(user_id) VALUES (?)";
-        try {
-            PreparedStatement preparedStatement2 = connection.prepareStatement(queryC);
-            preparedStatement2.setInt(1, user.getId());
-            preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-    }
 
-    @Override
-    public void addToCart(Product product) {
-
-    }
-
-    @Override
-    public void removeFromCart(int id) {
-
-    }
-
-    @Override
-    public void emptyCart() {
-
-    }
-
-    @Override
-    public Product find(int id) {
-        return null;
-    }
-
-    public Product findProduct(int id) {
-        try {
-            PreparedStatement statement = connection.createStatement();
-            String sql = "select * from product join supplier on product.supplier_id = supplier.id join product_category on product.category_id = product_category.id where product.id = ?";
-            PreparedStatement preparedSt = connection.prepareStatement(sql);
-            preparedSt.setInt(1, id);
-            ResultSet results = preparedSt.executeQuery();
-            Product searched = new Product();
-            while (results.next()) {
-                searched.setId(results.getInt("id"));
-                searched.setName(results.getString("name"));
-                searched.setDescription(results.getString("description"));
-                searched.setPrice(results.getFloat("price"), "USD");
-                searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
-                searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+        if(findCart(cartId) == null) {
+            String queryC = "INSERT INTO cart(user_id) VALUES (?)";
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(queryC);
+                preparedStatement2.setInt(1, user.getId());
+                preparedStatement2.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            statement.close();
-            System.out.println(searched.toString());
-            return searched;
+        }
+    }
+
+
+    @Override
+    public void removeFromCart(int cartId, int productId) {
+        String query = "DELETE FROM products_in_carts\n" +
+                "WHERE id in (SELECT id FROM products_in_carts WHERE cart_id = ? AND product_id = ? LIMIT 1)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,cartId);
+            preparedStatement.setInt(2,productId);
+            preparedStatement.execute();
+
 
         } catch (SQLException e) {
-            System.out.printf("I couldn't find product of id %s%n", id);
+            System.out.printf("I could not find this product in the cart.");
             e.printStackTrace();
         }
-        return null;
+
     }
+
+    @Override
+    public void emptyCart(int cartId) {
+        String query = "DELETE FROM products_in_carts WHERE cart_id = ? ";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,cartId);
+            preparedStatement.execute();
+
+
+        } catch (SQLException e) {
+            System.out.printf("I could not find any products in the cart.");
+            e.printStackTrace();
+        }
+
     }
 
     public Cart findCart(int cartId){
@@ -100,6 +90,7 @@ public class CartDaoJdbc implements CartDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
