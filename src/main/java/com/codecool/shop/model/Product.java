@@ -10,9 +10,8 @@ public class Product extends BaseModel {
     private Supplier supplier;
     private int buyQty;
 
-    public Product() {};
-
     public Product() {
+
     }
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -22,8 +21,6 @@ public class Product extends BaseModel {
         this.setProductCategory(productCategory);
         this.buyQty = 0;
     }
-
-
 
     public int getBuyQty() {
         return buyQty;

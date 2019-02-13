@@ -42,22 +42,22 @@ public class CartController extends HttpServlet {
 
         if(req.getParameter("add") != null) {
 
-            int productId = Integer.parseInt(req.getParameter("add"));
+            //int productId = Integer.parseInt(req.getParameter("add"));
 
-            Integer userId = session.getParam("id");
+            //Integer userId = session.getParam("id");
 
-            if (userId != null) {
+            /*if (userId != null) {
 
                 cartDataStore.addToCart(cartId, productId);
-            }
+            }*/
 
 
             // int cartId = user.getCartId;
 
 
-            // Cart cart = cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
+            cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
 
-            cartDataStore.addToCart(product, user);
+            //cartDataStore.addToCart(product, user);
         }
 
         if(req.getParameter("remove") != null) {

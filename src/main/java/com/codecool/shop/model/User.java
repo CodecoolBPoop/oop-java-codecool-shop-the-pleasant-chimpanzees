@@ -18,7 +18,9 @@ public class User {
         this.zip = zip;
     }
 
-    public User(){}
+    public User(int id){
+        this.id = id;
+    }
 
     public int getId(){
         return this.id;
