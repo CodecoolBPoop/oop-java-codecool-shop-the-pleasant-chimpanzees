@@ -13,6 +13,15 @@ import java.util.List;
 public class ProductDaoJdbc implements ProductDao {
 
     private Connection connection;
+    private static ProductDaoJdbc instance = null;
+
+
+    public static ProductDaoJdbc getInstance() {
+        if (instance == null) {
+            instance = new ProductDaoJdbc();
+        }
+        return instance;
+    }
 
     public ProductDaoJdbc() {
         this.connection = DBUtil.getInstance().getProductionConnection();

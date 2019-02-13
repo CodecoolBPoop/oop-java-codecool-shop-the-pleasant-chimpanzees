@@ -1,6 +1,7 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -22,6 +23,8 @@ public class ProductDaoJdbcTest {
 
     Connection connection = null;
     ProductDaoJdbc dbProduct;
+
+
 
     @BeforeAll
     void init() {
@@ -74,6 +77,9 @@ public class ProductDaoJdbcTest {
     void getAllProducts() {
         dbProduct.getAll();
     }
+
+
+
 
 
 
