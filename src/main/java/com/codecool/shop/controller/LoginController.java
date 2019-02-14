@@ -7,11 +7,13 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -43,7 +45,6 @@ public class LoginController extends HttpServlet {
         // Lets see if we have them in our database.
         boolean loggedIn = false;
         User found = UserDaoJdbc.getInstance().findByEmail(email);
-        System.out.printf("Looking for email %s and pw %s%n", email, password);
         String emailInDb = found.getEmail();
         String pwInDb = found.getPassword();
         System.out.printf("Found email in db, email is %s and pw is %s in db%n", emailInDb, pwInDb);
@@ -52,6 +53,8 @@ public class LoginController extends HttpServlet {
             loggedIn = true;
         }
         context.setVariable("loggedIn", loggedIn);
+        System.out.printf("Logged in is %s%n", loggedIn);
+
 
 
         // Check that an unencrypted password matches one that has previously been hashed
@@ -62,6 +65,12 @@ public class LoginController extends HttpServlet {
             System.out.printf("No match.");
         }
 
-        engine.process("product/index.html", context, resp.getWriter());
+        //if request is not from HttpServletRequest, you should do a typecast before
+        HttpSession session = req.getSession(true);
+        //save message in session
+        session.setAttribute("loggedIn", loggedIn);
+        session.setAttribute("userName", found.getEmail());
+        resp.sendRedirect("product/index.html");
+
     }
 }
