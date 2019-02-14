@@ -163,7 +163,7 @@ public class CartDaoJdbc implements CartDao {
     public List<Product> getAll(int cartId) {
         ArrayList<Product> productsInCart = new ArrayList<>();
 
-        String query = "Select COUNT(product.id) as buyQty, product.id, product.name,product.description,product.price FROM product JOIN products_in_carts ON product.id = products_in_carts.product_id WHERE cart_id = ? GROUP BY product.id";
+        String query = "Select COUNT(product.id) as buyQty, product.id, product.name,product.description,product.price,product.price*COUNT(product.id) as allPrice FROM product JOIN products_in_carts ON product.id = products_in_carts.product_id WHERE cart_id = ? GROUP BY product.id";
 
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -176,6 +176,7 @@ public class CartDaoJdbc implements CartDao {
                 product.setName(result.getString("name"));
                 product.setDescription(result.getString("description"));
                 product.setDefaultPrice(result.getFloat("price"));
+                product.setAllPrice(result.getFloat("allprice"));
                 productsInCart.add(product);
             }
         } catch (SQLException e) {

@@ -11,6 +11,8 @@ public class Product extends BaseModel {
     private int buyQty;
     private String imgPath;
 
+    private float allPrice;
+
     public Product() {
     }
 
@@ -20,6 +22,14 @@ public class Product extends BaseModel {
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
         this.buyQty = 0;
+    }
+
+    public float getAllPrice() {
+        return allPrice;
+    }
+
+    public void setAllPrice(float allPrice) {
+        this.allPrice = allPrice;
     }
 
     public int getBuyQty() {
@@ -67,6 +77,7 @@ public class Product extends BaseModel {
     public float getPriceQuantity() {
         return this.defaultPrice * this.buyQty;
     }
+
     public ProductCategory getProductCategory() {
         return productCategory;
     }

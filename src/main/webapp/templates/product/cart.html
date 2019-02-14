@@ -49,8 +49,16 @@
     </div>
 
     <span>
-        <a type="button" href="/login" class="btn btn-outline-primary">Login</a>
-    </span>
+        <span th:switch="${session.loggedIn}">
+            <span th:case="false">
+                <a type="button" href="/register" class="btn btn-outline-primary">Register</a>
+                <a type="button" href="/login" class="btn btn-outline-primary">Login</a>
+            </span>
+            <span th:case="true">
+                <span class="navbar-brand">Hello </span>
+                <span class="navbar-brand" th:text="${session.userName}">Hi User!</span>
+            </span>
+        </span>
 </nav>
 
 <div class="container top-margin">
@@ -58,7 +66,7 @@
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart}">
             <div class="card">
-                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_images/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <button type="button" class="btn btn-primary " data-toggle="popover" data-placement="top" th:data-content="${prod.description}">
@@ -80,6 +88,7 @@
             </div>
         </div>
     </div>
+    <h3 th:text="'Total price: ' + ${totalPrice} + ' USD'"></h3>
     <a href="/checkout" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Checkout</a>
 </div>
 <div th:replace="footer.html :: copy"></div>

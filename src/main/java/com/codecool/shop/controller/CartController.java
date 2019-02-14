@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/my-cart"})
 public class CartController extends HttpServlet {
-
+    private float totalPrice;
     CartDao cartDataStore = CartDaoJdbc.getInstance();
     ProductDao productDao = ProductDaoMem.getInstance();
 
@@ -37,8 +37,17 @@ public class CartController extends HttpServlet {
         int cartId = cartDataStore.getCartIdByEmail(email);
 
         for (Product product: cartDataStore.getAll(cartId)) {
-            product.getName();
+            product.getDefaultPrice();
         }
+
+        this.totalPrice = 0;
+
+        for (int i = 0; i < cartDataStore.getAll(cartId).size(); i++) {
+            this.totalPrice += cartDataStore.getAll(cartId).get(i).getAllPrice();
+        }
+
+        context.setVariable("totalPrice", this.totalPrice);
+
         context.setVariable("cart", cartDataStore.getAll(cartId));
         
 

@@ -21,15 +21,18 @@ public class CheckoutController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         CartDao cartDataStore = CartDaoMem.getInstance();
+
         String email = req.getSession().getAttribute("userName").toString();
 
         int cartId = cartDataStore.getCartIdByEmail(email);
 
-        totalPrice = 0;
-        for (int i = 0; i < cartDataStore.getAll(cartId).size(); i++)
-            this.totalPrice += cartDataStore.getAll(cartId).get(i).getPriceQuantity();
+        this.totalPrice = 0;
 
-        context.setVariable("totalPrice", totalPrice);
+        for (int i = 0; i < cartDataStore.getAll(cartId).size(); i++) {
+            this.totalPrice += cartDataStore.getAll(cartId).get(i).getAllPrice();
+        }
+
+        context.setVariable("totalPrice", this.totalPrice);
         context.setVariable("cart", cartDataStore.getAll(cartId));
 
         engine.process("/product/checkout.html", context, resp.getWriter());
