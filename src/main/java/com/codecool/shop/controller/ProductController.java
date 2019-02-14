@@ -1,11 +1,12 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.memory.SupplierDaoMem;
 import com.codecool.shop.model.BaseModel;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -23,9 +24,9 @@ import java.util.stream.Collectors;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
+    private ProductDao productDataStore = ProductDaoJdbc.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private SupplierDao supplierDataStore = SupplierDaoJdbc.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -79,11 +80,15 @@ public class ProductController extends HttpServlet {
         List<Product> seekedProducts = new ArrayList<>();
 
         for (Product product : list1) {
-            if(list2.contains(product)){
+            if(isContainsProductWithId(list2, product)){
                 seekedProducts.add(product);
             }
         }
         return seekedProducts;
+    }
+
+    private boolean isContainsProductWithId(List<Product> products, Product product) {
+        return null != products.stream().filter(p -> p.getId() == product.getId()).findFirst().get();
     }
 
     @Override
