@@ -9,7 +9,8 @@ public class BaseModel {
     protected String name;
     protected String description;
 
-    public BaseMode
+    public BaseModel() {
+    }
 
     public BaseModel(String name) {
         this.name = name;

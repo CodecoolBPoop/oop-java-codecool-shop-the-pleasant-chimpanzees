@@ -10,7 +10,9 @@ public class Product extends BaseModel {
     private Supplier supplier;
     private int buyQty;
 
-    public Product() {};
+    public Product() {
+
+    }
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
@@ -88,4 +90,6 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+
 }

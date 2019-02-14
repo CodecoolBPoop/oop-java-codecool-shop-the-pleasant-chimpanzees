@@ -7,11 +7,21 @@ public class Cart {
 
     private int userId;
 
-    public Cart(User user){
+    public Cart(User user, int cartId){
         this.userId = user.getId();
+        setId(cartId);
     }
 
     public void setId(int id){
         this.id = id;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
 }
