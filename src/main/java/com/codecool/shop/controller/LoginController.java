@@ -40,22 +40,16 @@ public class LoginController extends HttpServlet {
         String hashedEmail = BCrypt.hashpw(email, BCrypt.gensalt());
         String password = req.getParameter("password");
         String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
-        System.out.printf("Guys, email is %s, hashed %s.%nPw is %s, hashed %s.%n", email, hashedEmail, password, hashedPw);
 
         // Lets see if we have them in our database.
         boolean loggedIn = false;
         User found = UserDaoJdbc.getInstance().findByEmail(email);
         String emailInDb = found.getEmail();
         String pwInDb = found.getPassword();
-        System.out.printf("Found email in db, email is %s and pw is %s in db%n", emailInDb, pwInDb);
         if (email.equals(emailInDb) && password.equals(pwInDb)) {
-            System.out.printf("Got to this matching point");
             loggedIn = true;
         }
         context.setVariable("loggedIn", loggedIn);
-        System.out.printf("Logged in is %s%n", loggedIn);
-
-
 
         // Check that an unencrypted password matches one that has previously been hashed
         if (BCrypt.checkpw(password, hashedPw)) {
