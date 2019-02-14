@@ -8,13 +8,28 @@ public class Product extends BaseModel {
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
+    private int buyQty;
 
+
+    public Product() {
+    }
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+        this.buyQty = 0;
+    }
+
+
+
+    public int getBuyQty() {
+        return buyQty;
+    }
+
+    public void changeBuyQtyNumber(int qty) {
+        this.buyQty += qty;
     }
 
     public float getDefaultPrice() {
@@ -41,7 +56,9 @@ public class Product extends BaseModel {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
     }
-
+    public float getPriceQuantity() {
+        return this.defaultPrice * this.buyQty;
+    }
     public ProductCategory getProductCategory() {
         return productCategory;
     }
@@ -75,4 +92,6 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+
 }

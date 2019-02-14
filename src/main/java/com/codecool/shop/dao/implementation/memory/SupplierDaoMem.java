@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.memory;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
@@ -32,6 +32,13 @@ public class SupplierDaoMem implements SupplierDao {
     @Override
     public Supplier find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public Supplier find(String name) {
+        return data.stream()
+                .filter(t -> t.getName().equals(name)).findFirst()
+                .orElse(null);
     }
 
     @Override

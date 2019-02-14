@@ -1,18 +1,52 @@
+body {
+    background-image: url("../img/background/background.jpg");;
+}
+
 .glyphicon {
     margin-right:5px;
 }
-.thumbnail
-{
-    margin-bottom: 20px;
-    padding: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+
+.thumbnail-img {
+    height: 450px;
 }
-.thumbnail img
-{
-    margin-top: 10px;
+
+.card-text form{
+    display: inline-block;
 }
+
+.card-title {
+    font-size: 25px;
+}
+
+.card-body {
+    padding-left: 20px;
+    padding-right: 0px;
+}
+
+#filter-console {
+    padding: 15px 0 10px 5px;
+    border: 1px solid black;
+    margin: 10px 0;
+    color: white;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.container {
+    background-color: white;
+    padding-top: 6px;
+}
+
+#filter-console select {
+    margin-left: 15px;
+}
+
+#filter-console label {
+    margin-left: 15px;
+}
+
 .item.list-group-item
 {
     float: none;
@@ -23,6 +57,22 @@
 .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
 {
     background: #428bca;
+}
+
+.navbar {
+    background-color: black !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.fa-shopping-cart {
+    color: white;
+}
+
+.more-btn{
+    margin-left: 35px;
 }
 
 .item.list-group-item .list-group-image
@@ -56,7 +106,15 @@
 {
     clear: both;
 }
-.list-group-item-text
-{
-    margin: 0 0 11px;
+
+.img-mid{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    height: 350px;
+}
+
+.top-margin{
+    margin-top: 60px;
 }

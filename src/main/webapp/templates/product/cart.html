@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script src="static/js/main.js" defer ></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Comic Booth</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/my-cart"><i class="fa fa-shopping-cart"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container top-margin">
+
+    <div id="products" class="row">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart}">
+            <div class="card">
+                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                    <button type="button" class="btn btn-primary " data-toggle="popover" data-placement="top" th:data-content="${prod.description}">
+                        More
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                    </div>
+                    <div class="/card-text">
+                        <p th:text="${prod.getBuyQty()}">Qty: 0</p>
+                        <form action="/my-cart" method="post">
+                            <button name="add" class="btn btn-success" type="submit" th:value="${prod.id}">Add</button>
+                            <button name="remove" class="btn btn-success" type="submit" th:value="${prod.id}">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/checkout" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Checkout</a>
+</div>
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>
