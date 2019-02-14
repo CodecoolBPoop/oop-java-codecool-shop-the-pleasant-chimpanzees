@@ -1,4 +1,4 @@
 driver = org.postgresql.Driver
-url = jdbc:postgresql://localhost:5432/codecoolshoptester
-user  = postgres
-password = gery008
+url = jdbc:postgresql://localhost:5432/testcodecoolshop
+user  = adamgonda
+password = pwd

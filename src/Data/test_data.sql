@@ -95,23 +95,25 @@ VALUES (1, 2, 'Batman: hush', '???', 8.15, 'src/main/webapp/static/img/product_i
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
 VALUES (3, 3, 'Black mirror: Haven is a place on earth', '???', 8.15, 'src/main/webapp/static/img/product_images/product_9.jpg');
 
-INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
-VALUES (3, 3, 'Black mirror: play test', '???', 8.15, 'src/main/webapp/static/img/product_images/product_10.jpg');
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
-VALUES (1, 2, 'Detective comics: Batman', '???', 8.15, 'src/main/webapp/static/img/product_images/product_11.jpg');
+VALUES (1, 2, 'Detective comics: Batman', '???', 8.15, 'src/main/webapp/static/img/product_images/product_10.jpg');
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
-VALUES (2, 4, 'Garfield: kaboom #1', '???', 8.15, 'src/main/webapp/static/img/product_images/product_12.jpg');
+VALUES (2, 4, 'Garfield: kaboom #1', '???', 8.15, 'src/main/webapp/static/img/product_images/product_11.jpg');
+
+INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
+VALUES (2, 4, 'Garfield: S8', '???', 8.15, 'src/main/webapp/static/img/product_images/product_12.jpg');
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
 VALUES (2, 4, 'Garfield: S9', '???', 8.15, 'src/main/webapp/static/img/product_images/product_13.jpg');
 
-INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
-VALUES (2, 4, 'Garfield: S8', '???', 8.15, 'src/main/webapp/static/img/product_images/product_14.jpg');
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
-VALUES (2, 4, 'Garfield: grumpy cat', '???', 8.15, 'src/main/webapp/static/img/product_images/product_15.jpg');
+VALUES (2, 4, 'Garfield: grumpy cat', '???', 8.15, 'src/main/webapp/static/img/product_images/product_14.jpg');
+
+INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
+VALUES (3, 3, 'Black mirror: play test', '???', 8.15, 'src/main/webapp/static/img/product_images/product_15.jpg');
 
 INSERT INTO product (category_id, supplier_id, name, description, price, image_path)
 VALUES (1, 2, 'Preacher', '???', 8.15, 'src/main/webapp/static/img/product_images/product_16.jpg');
