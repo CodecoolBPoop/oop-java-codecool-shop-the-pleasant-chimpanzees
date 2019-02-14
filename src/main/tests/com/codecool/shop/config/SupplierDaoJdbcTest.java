@@ -23,7 +23,7 @@ public class SupplierDaoJdbcTest {
                 "src/Data/prod_config.txt",
                 "src/Data/test_config.txt");
 
-        DBUtil.getInstance().configure(data);
+        DBUtil.getInstance().connect(data);
         testConnection = DBUtil.getInstance().getTestConnection();
     }
 
