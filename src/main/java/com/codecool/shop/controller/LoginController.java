@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.database.UserDaoJdbc;
+import com.codecool.shop.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -27,6 +29,10 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+
+
         // Let's get the input secretly.
         String email = req.getParameter("email");
         String hashedEmail = BCrypt.hashpw(email, BCrypt.gensalt());
@@ -35,7 +41,18 @@ public class LoginController extends HttpServlet {
         System.out.printf("Guys, email is %s, hashed %s.%nPw is %s, hashed %s.%n", email, hashedEmail, password, hashedPw);
 
         // Lets see if we have them in our database.
-        boolean validLogin = false;
+        boolean loggedIn = false;
+        User found = UserDaoJdbc.getInstance().findByEmail(email);
+        System.out.printf("Looking for email %s and pw %s%n", email, password);
+        String emailInDb = found.getEmail();
+        String pwInDb = found.getPassword();
+        System.out.printf("Found email in db, email is %s and pw is %s in db%n", emailInDb, pwInDb);
+        if (email.equals(emailInDb) && password.equals(pwInDb)) {
+            System.out.printf("Got to this matching point");
+            loggedIn = true;
+        }
+        context.setVariable("loggedIn", loggedIn);
+
 
         // Check that an unencrypted password matches one that has previously been hashed
         if (BCrypt.checkpw(password, hashedPw)) {
@@ -45,5 +62,6 @@ public class LoginController extends HttpServlet {
             System.out.printf("No match.");
         }
 
+        engine.process("product/index.html", context, resp.getWriter());
     }
 }
