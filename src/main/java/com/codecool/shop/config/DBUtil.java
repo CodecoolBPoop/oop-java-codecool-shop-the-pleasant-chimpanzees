@@ -71,6 +71,9 @@ public class DBUtil {
         return testConnection;
     }
 
+    public void configure(ConnectionData data) {
+    }
+
     public static class ConnectionData {
 
         private Map<String, String> PRODUCTION_CONFIG_DATA = new HashMap<>();

@@ -27,6 +27,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+    public User(){};
 
     public int getId(){
         return this.id;
@@ -50,5 +51,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String emailToString(){
+        return String.format(this.email);
+    }
+
+    public String pwToString(){
+        return String.format(this.password);
     }
 }

@@ -4,9 +4,7 @@ import com.codecool.shop.config.DBUtil;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
 
@@ -20,13 +18,13 @@ public class UserDaoJdbc implements UserDao {
         return instance;
     }
 
-    private UserDaoJdbc() {
+    UserDaoJdbc() {
         connection = DBUtil.getInstance().getProductionConnection();
     }
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO user(email,password) VALUES (?,?)";
+        String query = "INSERT INTO _user(email,password) VALUES (?,?)";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getEmail());
@@ -35,25 +33,6 @@ public class UserDaoJdbc implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public User find(String email){
-        String query = "SELECT * FROM _user WHERE email = ?";
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, email);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-import java.sql.*;
-
-public class UserDaoJdbc implements UserDao {
-    private Connection connection;
-
-    public UserDaoJdbc() {
-        this.connection = DBUtil.getInstance().getTestConnection();
     }
 
     @Override

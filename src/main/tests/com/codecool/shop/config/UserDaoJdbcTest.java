@@ -21,7 +21,7 @@ public class UserDaoJdbcTest {
                 "src/Data/prod_config.txt",
                 "src/Data/test_config.txt");
 
-        DBUtil.getInstance().configure(data);
+        DBUtil.getInstance().connect(data);
         testConnection = DBUtil.getInstance().getTestConnection();
     }
 
@@ -31,6 +31,7 @@ public class UserDaoJdbcTest {
         UserDaoJdbc userDaoJdbc = UserDaoJdbc.getInstance();
         userDaoJdbc.add(user);
 
-        Assertions.assertEquals(user.getEmail(), );
+        Assertions.assertEquals(user.getEmail(), userDaoJdbc.findByEmail("kiskutya").emailToString());
+        Assertions.assertEquals(user.getPassword(), userDaoJdbc.findByPw("vauvau").pwToString());
     }
 }
