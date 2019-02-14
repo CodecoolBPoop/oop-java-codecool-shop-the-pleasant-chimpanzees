@@ -1,7 +1,6 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
-import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -12,9 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-import java.lang.reflect.Executable;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductDaoJdbcTest {
@@ -32,7 +29,7 @@ public class ProductDaoJdbcTest {
                 "src/Data/prod_config.txt",
                 "src/Data/test_config.txt");
 
-        DBUtil.getInstance().configure(data);
+        DBUtil.getInstance().connect(data);
         connection = DBUtil.getInstance().getTestConnection();
         dbProduct = new ProductDaoJdbc(connection);
     }

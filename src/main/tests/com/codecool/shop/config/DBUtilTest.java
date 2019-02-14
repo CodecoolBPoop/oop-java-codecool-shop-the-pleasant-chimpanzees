@@ -28,7 +28,7 @@ class DBUtilTest {
                 "src/Data/prod_config.txt",
                 "src/Data/test_config.txt");
 
-        DBUtil.getInstance().configure(data);
+        DBUtil.getInstance().connect(data);
         connection = DBUtil.getInstance().getTestConnection();
 
         executeQueryFromFile("src/Data/init_db.sql", connection);

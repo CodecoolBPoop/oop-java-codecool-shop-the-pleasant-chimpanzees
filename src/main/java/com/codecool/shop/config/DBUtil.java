@@ -24,7 +24,7 @@ public class DBUtil {
         return instance;
     }
 
-    public void configure(ConnectionData connectionData){
+    public void connect(ConnectionData connectionData){
         this.connectionData = connectionData;
         testConnection = initializeConnectionWith(
                 this.connectionData.getTestDriver(),
