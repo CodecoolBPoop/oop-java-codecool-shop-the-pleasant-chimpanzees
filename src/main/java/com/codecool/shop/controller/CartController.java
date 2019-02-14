@@ -48,17 +48,26 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
+
+
+        String email = req.getSession().getAttribute("userName").toString();
+
+        int cartId = cartDataStore.getCartIdByEmail(email);
+
         if(req.getParameter("add") != null) {
-            cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
+            cartDataStore.addToCart(cartId, Integer.parseInt(req.getParameter("add")));
         }
 
         if(req.getParameter("remove") != null) {
-            if (cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).getBuyQty() > 1) {
-                cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).changeBuyQtyNumber(-1);
+            cartDataStore.removeFromCart(cartId,Integer.parseInt(req.getParameter("remove")));
+            /*if (cartDataStore.find(Integer.parseInt(removeId)).getBuyQty() > 1) {
+                cartDataStore.find(Integer.parseInt(removeId).changeBuyQtyNumber(-1);
+
             } else {
-                cartDataStore.find(Integer.parseInt(req.getParameter("remove"))).changeBuyQtyNumber(-1);
-                cartDataStore.removeFromCart(Integer.parseInt(req.getParameter("remove")));
-            }
+                cartDataStore.find(removeId.changeBuyQtyNumber(-1));
+                cartDataStore.removeFromCart(removeId);
+            }*/
         }
 
         doGet(req,resp);
