@@ -113,4 +113,8 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         }
         return allProductCategory;
     }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
 }
