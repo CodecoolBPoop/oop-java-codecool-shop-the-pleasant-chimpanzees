@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartDaoJdbc implements CartDao {
@@ -159,8 +160,28 @@ public class CartDaoJdbc implements CartDao {
     }
 
     @Override
-    public List<Product> getAll() {
-        return null;
+    public List<Product> getAll(int cartId) {
+        ArrayList<Product> productsInCart = new ArrayList<>();
+
+        String query = "Select * from product JOIN products_in_carts ON product.id = products_in_carts.product_id WHERE cart_id = ?";
+
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, cartId);
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next()){
+                Product product = new Product();
+                product.setId(result.getInt("id"));
+                product.setName(result.getString("name"));
+                product.setDescription(result.getString("description"));
+                product.setDefaultPrice(result.getFloat("price"));
+                product.setImgPath(result.getString("image_path"));
+                productsInCart.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productsInCart;
     }
 
 }

@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.database.CartDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
@@ -22,7 +23,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/my-cart"})
 public class CartController extends HttpServlet {
 
-    CartDao cartDataStore = CartDaoMem.getInstance();
+    CartDao cartDataStore = CartDaoJdbc.getInstance();
     ProductDao productDao = ProductDaoMem.getInstance();
 
     @Override
@@ -31,8 +32,10 @@ public class CartController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
+        String email = req.getSession().getAttribute("userName").toString();
 
-        context.setVariable("cart", cartDataStore.getAll());
+        int cartId = cartDataStore.getCartIdByEmail(email);
+        context.setVariable("cart", cartDataStore.getAll(cartId));
 
         engine.process("/product/cart.html", context, resp.getWriter());
     }

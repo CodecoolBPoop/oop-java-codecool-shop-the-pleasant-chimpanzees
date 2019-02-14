@@ -74,7 +74,7 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> getAll(int cartId) {
         return data;
     }
 

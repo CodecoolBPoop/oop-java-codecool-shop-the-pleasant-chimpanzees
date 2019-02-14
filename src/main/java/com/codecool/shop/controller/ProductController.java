@@ -106,7 +106,6 @@ public class ProductController extends HttpServlet {
         int idOfProduct = Integer.parseInt(req.getParameter("add"));
 
         String email = req.getSession().getAttribute("userName").toString();
-        System.out.println(email);
 
         int cartId = cartDataStore.getCartIdByEmail(email);
 

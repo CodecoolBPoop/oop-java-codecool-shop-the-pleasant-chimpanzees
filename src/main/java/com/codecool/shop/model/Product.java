@@ -9,6 +9,7 @@ public class Product extends BaseModel {
     private ProductCategory productCategory;
     private Supplier supplier;
     private int buyQty;
+    private String imgPath;
 
     public Product() {
 
@@ -36,6 +37,14 @@ public class Product extends BaseModel {
 
     public void setDefaultPrice(float defaultPrice) {
         this.defaultPrice = defaultPrice;
+    }
+
+    public void setImgPath(String imgPath){
+        this.imgPath = imgPath;
+    }
+
+    public String getImgPath(){
+        return this.imgPath;
     }
 
     public Currency getDefaultCurrency() {

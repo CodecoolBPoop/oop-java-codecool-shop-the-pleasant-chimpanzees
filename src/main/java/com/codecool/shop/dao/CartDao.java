@@ -17,5 +17,5 @@ public interface CartDao{
     Product find(int id);
     int getCartIdByEmail(String email);
 
-    List<Product> getAll();
+    List<Product> getAll(int cartId);
 }
