@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,6 +40,11 @@ public class ProductController extends HttpServlet {
         context.setVariable("suppliers", getTagsAtSelectedFirst(supplierFilter, supplierDataStore.getAll()));
         context.setVariable("categories", getTagsAtSelectedFirst(categoryFilter , productCategoryDataStore.getAll()));
         context.setVariable("products", filterProducts(categoryFilter, supplierFilter, productDataStore));
+        HttpSession session = req.getSession(true);
+        if (session.getAttribute("loggedIn") == null) {
+            session.setAttribute("loggedIn", false);
+        }
+
         engine.process("product/index.html", context, resp.getWriter());
 
     }

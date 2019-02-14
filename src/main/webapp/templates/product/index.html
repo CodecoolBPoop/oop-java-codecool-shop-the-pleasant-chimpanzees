@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop</title>
 
@@ -14,20 +14,22 @@
 
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
-    <script src="static/js/main.js" defer ></script>
+    <script src="static/js/main.js" defer></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -38,7 +40,9 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">Comic Booth</a>
@@ -50,6 +54,19 @@
             </li>
         </ul>
     </div>
+    <span>
+        <span th:switch="${session.loggedIn}">
+            <span th:case="false">
+                <a type="button" href="/register" class="btn btn-outline-primary">Register</a>
+                <a type="button" href="/login" class="btn btn-outline-primary">Login</a>
+            </span>
+            <span th:case="true">
+                <span class="navbar-brand">Hello </span>
+                <span class="navbar-brand" th:text="${session.userName}">Hi User!</span>
+            </span>
+        </span>
+
+    </span>
 </nav>
 
 <div class="container">
@@ -97,7 +114,8 @@
     <div id="products" class="row">
         <div class="col col-sm-6 col-md-5 col-lg-3 pb-5" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_images/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="thumbnail-img" src="http://placehold.it/400x250/000/fff"
+                     th:attr="src='/static/img/product_images/product_' + ${prod.id} + '.jpg'" alt=""/>
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                 </div>
@@ -107,9 +125,12 @@
                     </div>
                     <div class="card-text">
                         <form action="/" method="post">
-                            <button name="add" class="btn btn-success add_to_checkout_btn" type="submit" th:value="${prod.id}">Add to cart</button>
+                            <button name="add" class="btn btn-success add_to_checkout_btn" type="submit"
+                                    th:value="${prod.id}">Add to cart
+                            </button>
                         </form>
-                        <button type="button" class="btn btn-primary more-btn" data-toggle="popover" data-placement="top" th:data-content="${prod.description}">
+                        <button type="button" class="btn btn-primary more-btn" data-toggle="popover"
+                                data-placement="top" th:data-content="${prod.description}">
                             More
                         </button>
                     </div>
@@ -119,7 +140,7 @@
     </div>
 
 </div>
-  
+
 <div th:replace="footer.html :: copy"></div>
 
 </body>

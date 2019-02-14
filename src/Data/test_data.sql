@@ -9,6 +9,16 @@ VALUES ('marti@gmail.com','test');
 INSERT INTO _user (email, password)
 VALUES ('helen@gmail.com','test');
 
+INSERT INTO _user (email, password)
+VALUES ('evi@gmail.com','111');
+
+INSERT INTO _user (email, password)
+VALUES ('iza@gmail.com','222');
+
+INSERT INTO _user (email, password)
+VALUES ('dani@gmail.com','333');
+
+
 
 
 INSERT INTO billing_info (user_id, name, address, city, state, zip)
