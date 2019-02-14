@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
         //save message in session
         session.setAttribute("loggedIn", loggedIn);
         session.setAttribute("userName", found.getEmail());
-        resp.sendRedirect("product/index.html");
+        resp.sendRedirect("");
 
     }
 }

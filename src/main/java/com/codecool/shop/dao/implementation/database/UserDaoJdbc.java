@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation.database;
 
 import com.codecool.shop.config.DBUtil;
 import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.User;
 
 import java.sql.*;
@@ -18,7 +19,7 @@ public class UserDaoJdbc implements UserDao {
         return instance;
     }
 
-    UserDaoJdbc() {
+    private UserDaoJdbc() {
         connection = DBUtil.getInstance().getProductionConnection();
     }
 
@@ -47,6 +48,7 @@ public class UserDaoJdbc implements UserDao {
             while (result.next()) {
                 user.setEmail(result.getString("email"));
                 user.setPassword(result.getString("password"));
+                user.setId(result.getInt("id"));
             }
             statement.close();
             return user;
@@ -78,4 +80,7 @@ public class UserDaoJdbc implements UserDao {
         }
         return null;
     }
+
+
+
 }

@@ -12,6 +12,8 @@ public class Cart {
         setId(cartId);
     }
 
+    public Cart(){}
+
     public void setId(int id){
         this.id = id;
     }

@@ -28,12 +28,12 @@ public class CartDaoJdbcTest {
     @Test
     void addToCartTest(){
         User user = new User(2);
-        Cart cart = new Cart(user,6);
+        Cart cart = new Cart(user,2);
         CartDaoJdbc cartDaoJdbc = CartDaoJdbc.getInstance();
-        cartDaoJdbc.addToCart(6, 2, 2);
+        cartDaoJdbc.addToCart(2, 2, 2);
 
-        Assertions.assertEquals(user.getId(), cartDaoJdbc.findCart(6).getUserId());
-        Assertions.assertEquals(cart.getId(), cartDaoJdbc.findCart(6).getId());
+        Assertions.assertEquals(user.getId(), cartDaoJdbc.findCart(2).getUserId());
+        Assertions.assertEquals(cart.getId(), cartDaoJdbc.findCart(2).getId());
     }
 
     @Test

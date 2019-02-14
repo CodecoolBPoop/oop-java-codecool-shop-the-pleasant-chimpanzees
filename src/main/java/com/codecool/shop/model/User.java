@@ -27,7 +27,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    public User(){};
+    public User(){}
 
     public int getId(){
         return this.id;

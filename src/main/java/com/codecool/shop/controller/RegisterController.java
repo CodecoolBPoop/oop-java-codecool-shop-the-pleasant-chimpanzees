@@ -2,8 +2,11 @@ package com.codecool.shop.controller;
 
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.implementation.database.CartDaoJdbc;
 import com.codecool.shop.dao.implementation.database.UserDaoJdbc;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.User;
 import com.sun.net.httpserver.HttpServer;
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,18 +36,18 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-
         UserDao userDataStore = UserDaoJdbc.getInstance();
-
-        System.out.println("megerkezett");
+        CartDao cartDataStore = CartDaoJdbc.getInstance();
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
 
         User user = new User(email, password);
+
         userDataStore.add(user);
-        resp.sendRedirect("product/index.html");
+        cartDataStore.add(userDataStore.findByEmail(email).getId());
+
+        resp.sendRedirect("");
     }
 }

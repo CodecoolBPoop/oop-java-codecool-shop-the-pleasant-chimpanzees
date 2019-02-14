@@ -22,24 +22,11 @@ public class CartDaoJdbc implements CartDao {
         return instance;
     }
 
-    CartDaoJdbc() {
+    public CartDaoJdbc() {
         connection = DBUtil.getInstance().getProductionConnection();
     }
 
-    public void addToCart(int cartId, int productId, int userId) {
-
-        if(findCart(cartId) == null) {
-            String queryC = "INSERT INTO cart(id,user_id) VALUES (?,?)";
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(queryC);
-                preparedStatement.setInt(1, cartId);
-                preparedStatement.setInt(2, userId);
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
+    public void addToCart(int cartId, int productId) {
         String queryPIC = "INSERT INTO products_in_carts (cart_id, product_id) VALUES(?, ?)";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(queryPIC);
@@ -49,12 +36,18 @@ public class CartDaoJdbc implements CartDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public void addToCart(Product product) {
-
+    public void add(int userId) {
+        String query = "INSERT INTO cart(user_id) VALUES (?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -119,7 +112,50 @@ public class CartDaoJdbc implements CartDao {
 
     @Override
     public Product find(int id) {
+        try {
+            String sql = "select * from product join supplier on product.supplier_id = supplier.id join product_category on product.category_id = product_category.id where product.id = ?";
+            PreparedStatement preparedSt = connection.prepareStatement(sql);
+            preparedSt.setInt(1, id);
+            ResultSet results = preparedSt.executeQuery();
+            Product searched = new Product();
+            getOneProductData(results, searched);
+            if (searched.getName().equals("")) {
+                throw new NullPointerException("No stuff by this id exists.");
+            }
+            return searched;
+
+        } catch (SQLException e) {
+            System.out.printf("I couldn't find product of id %s%n", id);
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    private void getOneProductData(ResultSet results, Product searched) throws SQLException {
+        while (results.next()) {
+            searched.setId(results.getInt("id"));
+            searched.setName(results.getString("name"));
+            searched.setDescription(results.getString("description"));
+            searched.setPrice(results.getFloat("price"), "USD");
+            searched.setSupplier(new Supplier(results.getString(9), results.getString(10)));
+            searched.setProductCategory(new ProductCategory(results.getString(11), results.getString(12), results.getString(13)));
+        }
+    }
+
+    public int getCartIdByEmail(String email){
+        String query = "select cart.id from cart JOIN _user On cart.user_id = _user.id WHERE _user.email = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            ResultSet result = preparedStatement.executeQuery();
+            Cart cart = new Cart();
+            while (result.next()){
+                return result.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
@@ -127,6 +163,4 @@ public class CartDaoJdbc implements CartDao {
         return null;
     }
 
-    public void add(User user) {
-    }
 }

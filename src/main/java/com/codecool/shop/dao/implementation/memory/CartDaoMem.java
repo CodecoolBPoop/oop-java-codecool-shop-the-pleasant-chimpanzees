@@ -11,6 +11,8 @@ public class CartDaoMem implements CartDao {
 
     private List<Product> data = new ArrayList<>();
     private static CartDaoMem instance = null;
+    private int cartId;
+    private int productId;
 
     private CartDaoMem() {
     }
@@ -36,9 +38,14 @@ public class CartDaoMem implements CartDao {
         data.clear();
     }
 
-    @Override
-    public void addToCart(int cartId, int productId, int userId) {
 
+    @Override
+    public void addToCart(int cartId, int productId) {
+
+    }
+
+    @Override
+    public void add(int userId) {
     }
 
     @Override
@@ -59,6 +66,11 @@ public class CartDaoMem implements CartDao {
     @Override
     public Product find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public int getCartIdByEmail(String email) {
+        return 0;
     }
 
     @Override

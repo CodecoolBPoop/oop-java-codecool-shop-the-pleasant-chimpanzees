@@ -34,4 +34,5 @@ public class UserDaoJdbcTest {
         Assertions.assertEquals(user.getEmail(), userDaoJdbc.findByEmail("kiskutya").emailToString());
         Assertions.assertEquals(user.getPassword(), userDaoJdbc.findByPw("vauvau").pwToString());
     }
+
 }

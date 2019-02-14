@@ -41,23 +41,7 @@ public class CartController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if(req.getParameter("add") != null) {
-
-            //int productId = Integer.parseInt(req.getParameter("add"));
-
-            //Integer userId = session.getParam("id");
-
-            /*if (userId != null) {
-
-                cartDataStore.addToCart(cartId, productId);
-            }*/
-
-
-            // int cartId = user.getCartId;
-
-
             cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
-
-            //cartDataStore.addToCart(product, user);
         }
 
         if(req.getParameter("remove") != null) {
@@ -68,7 +52,6 @@ public class CartController extends HttpServlet {
                 cartDataStore.removeFromCart(Integer.parseInt(req.getParameter("remove")));
             }
         }
-
 
         doGet(req,resp);
     }
