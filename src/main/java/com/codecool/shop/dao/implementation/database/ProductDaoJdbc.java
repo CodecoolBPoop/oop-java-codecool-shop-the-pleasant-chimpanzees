@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation.database;
 
 import com.codecool.shop.config.DBUtil;
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
@@ -16,6 +17,7 @@ public class ProductDaoJdbc implements ProductDao {
     private Connection connection;
     private static ProductDaoJdbc instance = null;
     private SupplierDao supplierDao = SupplierDaoJdbc.getInstance();
+    private ProductCategoryDao productCategory = ProductCategoryDaoJdbc.getInstance();
 
 
     public static ProductDaoJdbc getInstance() {
@@ -127,9 +129,7 @@ public class ProductDaoJdbc implements ProductDao {
         ArrayList<Product> everyProduct = new ArrayList<>();
 
         try {
-            String sql = "select * from product\n" +
-                    "  join supplier on product.supplier_id = supplier.id\n" +
-                    "join product_category on product.category_id = product_category.id;";
+            String sql = "select * from product";
             PreparedStatement preppedStmnt = connection.prepareStatement(sql);
             ResultSet results = preppedStmnt.executeQuery();
             everyProduct = collectProductsToList(results);
@@ -167,8 +167,10 @@ public class ProductDaoJdbc implements ProductDao {
             current.setName(results.getString("name"));
             current.setDescription(results.getString("description"));
             current.setPrice(results.getFloat("price"), "USD");
-            current.setSupplier(supplierDao.find(results.getString(9)));
-            current.setProductCategory(new ProductCategory(results.getString(12), results.getString(14), results.getString(13)));
+            Supplier supplier = supplierDao.find(results.getInt("supplier_id"));
+            ProductCategory _productCategory = productCategory.find(results.getInt("category_id"));
+            current.setSupplier(supplier);
+            current.setProductCategory(_productCategory);
             everyProduct.add(current);
         }
         return everyProduct;

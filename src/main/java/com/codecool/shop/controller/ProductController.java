@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -95,7 +96,8 @@ public class ProductController extends HttpServlet {
     }
 
     private boolean isContainsProductWithId(List<Product> products, Product product) {
-        return null != products.stream().filter(p -> p.getId() == product.getId()).findFirst().get();
+        List<Product> products1 = products.stream().filter(p -> p.getId() == product.getId()).collect(Collectors.toList());
+        return products1.size() > 0;
     }
 
     @Override
