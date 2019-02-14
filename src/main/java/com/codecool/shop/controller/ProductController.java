@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class ProductController extends HttpServlet {
 
     private ProductDao productDataStore = ProductDaoJdbc.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
     private SupplierDao supplierDataStore = SupplierDaoJdbc.getInstance();
 
     @Override
