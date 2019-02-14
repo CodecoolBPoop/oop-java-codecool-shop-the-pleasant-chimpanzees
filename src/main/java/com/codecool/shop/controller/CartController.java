@@ -35,7 +35,12 @@ public class CartController extends HttpServlet {
         String email = req.getSession().getAttribute("userName").toString();
 
         int cartId = cartDataStore.getCartIdByEmail(email);
+
+        for (Product product: cartDataStore.getAll(cartId)) {
+            product.getName();
+        }
         context.setVariable("cart", cartDataStore.getAll(cartId));
+        
 
         engine.process("/product/cart.html", context, resp.getWriter());
     }

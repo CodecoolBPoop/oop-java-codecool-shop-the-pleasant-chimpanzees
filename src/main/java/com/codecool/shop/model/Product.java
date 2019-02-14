@@ -12,7 +12,6 @@ public class Product extends BaseModel {
     private String imgPath;
 
     public Product() {
-
     }
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -26,6 +25,8 @@ public class Product extends BaseModel {
     public int getBuyQty() {
         return buyQty;
     }
+
+    public void setBuyQty(int qty){ this.buyQty = qty; }
 
     public void changeBuyQtyNumber(int qty) {
         this.buyQty += qty;
