@@ -22,7 +22,7 @@ public class CartDaoJdbc implements CartDao {
         return instance;
     }
 
-    private CartDaoJdbc() {
+    CartDaoJdbc() {
         connection = DBUtil.getInstance().getProductionConnection();
     }
 
@@ -125,5 +125,8 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public List<Product> getAll() {
         return null;
+    }
+
+    public void add(User user) {
     }
 }

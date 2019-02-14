@@ -4,5 +4,6 @@ import com.codecool.shop.model.User;
 
 public interface UserDao {
 
-    public void add(User user);
+    void add(User user);
+    User find(String email);
 }
