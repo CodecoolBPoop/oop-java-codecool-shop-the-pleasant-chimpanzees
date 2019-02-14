@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation.database;
 
 import com.codecool.shop.config.DBUtil;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -14,6 +15,7 @@ public class ProductDaoJdbc implements ProductDao {
 
     private Connection connection;
     private static ProductDaoJdbc instance = null;
+    private SupplierDao supplierDao = SupplierDaoJdbc.getInstance();
 
 
     public static ProductDaoJdbc getInstance() {
@@ -125,7 +127,9 @@ public class ProductDaoJdbc implements ProductDao {
         ArrayList<Product> everyProduct = new ArrayList<>();
 
         try {
-            String sql = "select * from product";
+            String sql = "select * from product\n" +
+                    "  join supplier on product.supplier_id = supplier.id\n" +
+                    "join product_category on product.category_id = product_category.id;";
             PreparedStatement preppedStmnt = connection.prepareStatement(sql);
             ResultSet results = preppedStmnt.executeQuery();
             everyProduct = collectProductsToList(results);
@@ -163,6 +167,8 @@ public class ProductDaoJdbc implements ProductDao {
             current.setName(results.getString("name"));
             current.setDescription(results.getString("description"));
             current.setPrice(results.getFloat("price"), "USD");
+            current.setSupplier(supplierDao.find(results.getString(9)));
+            current.setProductCategory(new ProductCategory(results.getString(12), results.getString(14), results.getString(13)));
             everyProduct.add(current);
         }
         return everyProduct;
