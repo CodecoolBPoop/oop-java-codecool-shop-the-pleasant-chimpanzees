@@ -38,6 +38,7 @@ function setAddProductEventHandler(){
 
 }
 
+
 function filterSetup(){
     const sendMessage = () => {
         const supplier = getSelectedValue(document.getElementById('supplier-drop-down'))
@@ -50,8 +51,8 @@ function filterSetup(){
 
 function main(){
     //$(() => $('[data-toggle="popover"]').popover())
-    filterSetup()
-    setAddProductEventHandler()
+    filterSetup();
+    setAddProductEventHandler();
 }
 
-main()
+main();

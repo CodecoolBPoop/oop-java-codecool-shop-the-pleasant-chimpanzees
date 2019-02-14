@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation.memory;
 
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class CartDaoMem implements CartDao {
         return instance;
     }
 
-    @Override
     public void addToCart(Product product) {
         product.changeBuyQtyNumber(1);
         data.add(product);
@@ -31,9 +31,29 @@ public class CartDaoMem implements CartDao {
         data.remove(find(id));
     }
 
-    @Override
+
     public void emptyCart() {
         data.clear();
+    }
+
+    @Override
+    public void addToCart(int cartId, int productId, int userId) {
+
+    }
+
+    @Override
+    public void removeFromCart(int cartId, int productId) {
+
+    }
+
+    @Override
+    public void emptyCart(int cartId) {
+
+    }
+
+    @Override
+    public Cart findCart(int cartId) {
+        return null;
     }
 
     @Override

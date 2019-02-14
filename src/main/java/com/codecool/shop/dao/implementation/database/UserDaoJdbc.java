@@ -7,13 +7,9 @@ import com.codecool.shop.model.User;
 import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
+
     private Connection connection;
     private static UserDaoJdbc instance = null;
-
-
-    public UserDaoJdbc() {
-        this.connection = DBUtil.getInstance().getTestConnection();
-    }
 
     public static UserDaoJdbc getInstance() {
         if (instance == null) {
@@ -22,6 +18,22 @@ public class UserDaoJdbc implements UserDao {
         return instance;
     }
 
+    UserDaoJdbc() {
+        connection = DBUtil.getInstance().getProductionConnection();
+    }
+
+    @Override
+    public void add(User user) {
+        String query = "INSERT INTO _user(email,password) VALUES (?,?)";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public User findByEmail(String email) {

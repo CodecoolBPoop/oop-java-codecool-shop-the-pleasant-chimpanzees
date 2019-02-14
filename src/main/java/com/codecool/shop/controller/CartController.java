@@ -2,7 +2,13 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
+import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,6 +23,7 @@ import java.io.IOException;
 public class CartController extends HttpServlet {
 
     CartDao cartDataStore = CartDaoMem.getInstance();
+    ProductDao productDao = ProductDaoMem.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,7 +41,23 @@ public class CartController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if(req.getParameter("add") != null) {
+
+            //int productId = Integer.parseInt(req.getParameter("add"));
+
+            //Integer userId = session.getParam("id");
+
+            /*if (userId != null) {
+
+                cartDataStore.addToCart(cartId, productId);
+            }*/
+
+
+            // int cartId = user.getCartId;
+
+
             cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
+
+            //cartDataStore.addToCart(product, user);
         }
 
         if(req.getParameter("remove") != null) {

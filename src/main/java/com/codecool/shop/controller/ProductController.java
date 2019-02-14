@@ -105,7 +105,7 @@ public class ProductController extends HttpServlet {
         int idOfProduct = Integer.parseInt(req.getParameter("add"));
 
         if (cartDataStore.find(idOfProduct) == null) {
-            cartDataStore.addToCart(productDataStore.find(idOfProduct));
+            //cartDataStore.addToCart(productDataStore.find(idOfProduct));
         } else {
             cartDataStore.find(idOfProduct).changeBuyQtyNumber(1);
         }
