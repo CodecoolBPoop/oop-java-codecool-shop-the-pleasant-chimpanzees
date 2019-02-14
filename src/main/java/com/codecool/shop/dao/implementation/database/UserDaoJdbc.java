@@ -8,10 +8,20 @@ import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
     private Connection connection;
+    private static UserDaoJdbc instance = null;
+
 
     public UserDaoJdbc() {
         this.connection = DBUtil.getInstance().getTestConnection();
     }
+
+    public static UserDaoJdbc getInstance() {
+        if (instance == null) {
+            instance = new UserDaoJdbc();
+        }
+        return instance;
+    }
+
 
     @Override
     public User findByEmail(String email) {
