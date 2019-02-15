@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.database.CartDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
@@ -22,8 +23,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/my-cart"})
 public class CartController extends HttpServlet {
 
-    CartDao cartDataStore = CartDaoMem.getInstance();
-    ProductDao productDao = ProductDaoMem.getInstance();
+    CartDao cartDataStore = CartDaoJdbc.getInstance();
+    ProductDao productDao = ProductDaoJdbc.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,22 +43,7 @@ public class CartController extends HttpServlet {
 
         if(req.getParameter("add") != null) {
 
-            //int productId = Integer.parseInt(req.getParameter("add"));
-
-            //Integer userId = session.getParam("id");
-
-            /*if (userId != null) {
-
-                cartDataStore.addToCart(cartId, productId);
-            }*/
-
-
-            // int cartId = user.getCartId;
-
-
             cartDataStore.find(Integer.parseInt(req.getParameter("add"))).changeBuyQtyNumber(1);
-
-            //cartDataStore.addToCart(product, user);
         }
 
         if(req.getParameter("remove") != null) {
