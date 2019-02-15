@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.database.CartDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -95,19 +97,21 @@ public class ProductController extends HttpServlet {
     }
 
     private boolean isContainsProductWithId(List<Product> products, Product product) {
-        return null != products.stream().filter(p -> p.getId() == product.getId()).findFirst().get();
+        List<Product> products1 = products.stream().filter(p -> p.getId() == product.getId()).collect(Collectors.toList());
+        return products1.size() > 0;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        int idOfProduct = Integer.parseInt(req.getParameter("add"));
+        ProductDao productDataStore = ProductDaoJdbc.getInstance();
+        CartDao cartDataStore = CartDaoJdbc.getInstance();
 
-        if (cartDataStore.find(idOfProduct) == null) {
-            //cartDataStore.addToCart(productDataStore.find(idOfProduct));
+        int productId = Integer.parseInt(req.getParameter("add"));
+
+        if (cartDataStore.find(productId) == null) {
+            cartDataStore.addToCart(productDataStore.find(productId));
         } else {
-            cartDataStore.find(idOfProduct).changeBuyQtyNumber(1);
+            cartDataStore.find(productId).changeBuyQtyNumber(1);
         }
 
         doGet(req,resp);

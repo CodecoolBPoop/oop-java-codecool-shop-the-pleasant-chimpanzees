@@ -37,8 +37,6 @@ public class RegisterController extends HttpServlet {
 
         UserDao userDataStore = UserDaoJdbc.getInstance();
 
-        System.out.println("megerkezett");
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());

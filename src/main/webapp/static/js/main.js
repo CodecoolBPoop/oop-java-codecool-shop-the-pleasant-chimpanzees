@@ -38,21 +38,18 @@ function setAddProductEventHandler(){
 
 }
 
-
-function filterSetup(){
-    const sendMessage = () => {
-        const supplier = getSelectedValue(document.getElementById('supplier-drop-down'))
-        const category = getSelectedValue(document.getElementById('category-drop-down'))
-
-        window.location.href = `http://localhost:8888/?category=${category}&supplier=${supplier}`
-    }
+function sendMessage() {
     const getSelectedValue = selector => selector.options[selector.selectedIndex].text
+    const supplier = getSelectedValue(document.getElementById('supplier-drop-down'))
+    const category = getSelectedValue(document.getElementById('category-drop-down'))
+
+    window.location.href = `http://localhost:8888/?category=${category}&supplier=${supplier}`
 }
+
 
 function main(){
     //$(() => $('[data-toggle="popover"]').popover())
-    filterSetup();
-    setAddProductEventHandler();
+    setAddProductEventHandler()
 }
 
-main();
+main()
